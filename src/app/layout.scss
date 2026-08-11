@@ -2,6 +2,12 @@
   font-family: "Barlow Condensed", sans-serif;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
@@ -38,7 +44,6 @@ body {
 
   .main-area {
     grid-area: main;
-    padding: 2rem;
     overflow-y: auto;
     height: 100%;
     border-top: 1px solid var(--border-color);

@@ -13,7 +13,7 @@ export default function Sidebar() {
         <div className="sidebar-logo">
           <img
             className="sidebar__logo"
-            src="./icons/gamepad_icon.svg"
+            src="/icons/gamepad_icon.svg"
             alt="Gamepad Icon"
           />
           GAMECASE
@@ -36,7 +36,7 @@ export default function Sidebar() {
             className={`nav-item ${pathname === "/dashboard" ? "active" : ""}`}
           >
             <span>
-              <img src="./icons/dashboard_icon.svg" alt="Dashboard Icon" />
+              <img src="/icons/dashboard_icon.svg" alt="Dashboard Icon" />
             </span>{" "}
             Dashboard
           </Link>
@@ -45,7 +45,7 @@ export default function Sidebar() {
             className={`nav-item ${pathname === "/mycollection" ? "active" : ""}`}
           >
             <span>
-              <img src="./icons/collection_icon.svg" alt="Collection Icon" />
+              <img src="/icons/collection_icon.svg" alt="Collection Icon" />
             </span>{" "}
             My Collection
           </Link>
@@ -54,7 +54,7 @@ export default function Sidebar() {
             className={`nav-item ${pathname === "/browse" ? "active" : ""}`}
           >
             <span>
-              <img src="./icons/search_icon.svg" alt="Search Icon" />
+              <img src="/icons/search_icon.svg" alt="Search Icon" />
             </span>{" "}
             Browse Games
           </Link>

@@ -15,7 +15,7 @@ $accent-blue: #3b82f6;
   flex-direction: column;
   justify-content: space-between;
   padding: 1.5rem 1rem;
-  height: calc(100% - 3rem);
+  height: 100%;
   position: sticky;
   top: 0;
 
@@ -54,7 +54,7 @@ $accent-blue: #3b82f6;
 
   &__stats-rating {
     background-color: var(--green-badge-color);
-    padding: 15px;
+    padding: 15px 20px;
     border-radius: 4px;
     color: var(--green-badge-text-color);
     font-weight: 700;

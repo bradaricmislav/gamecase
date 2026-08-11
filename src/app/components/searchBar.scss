@@ -1,0 +1,30 @@
+.search-form {
+  background-color: var(--input-color);
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  padding: 8px 16px 8px 8px;
+  border-radius: 8px;
+  width: calc(100% * 2 / 3);
+
+  &:focus {
+    border-color: var(--green-badge-color);
+  }
+
+  &__submit {
+    background: none;
+    border: none;
+  }
+
+  &__input {
+    background: none;
+    border: none;
+    width: 100%;
+    color: var(--input-text-color);
+    outline: none;
+
+    &::placeholder {
+      color: var(--text-color);
+    }
+  }
+}

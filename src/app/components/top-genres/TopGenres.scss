@@ -1,0 +1,36 @@
+.top-genres {
+  padding: 0;
+  margin: 0;
+  background-color: var(--container-bg-color);
+  list-style-type: none;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+
+  display: flex;
+  flex-direction: column;
+
+  &__genre {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 500;
+    flex: 1;
+    color: var(--light-gray-color);
+    padding: 12px 16px;
+
+    &:last-child {
+      border: none;
+    }
+  }
+
+  &__left {
+    display: flex;
+    gap: 10px;
+
+    span {
+      color: var(--dark-text-color);
+      font-weight: 400;
+    }
+  }
+}

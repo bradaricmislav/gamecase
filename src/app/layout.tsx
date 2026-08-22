@@ -1,5 +1,6 @@
-import Sidebar from "./components/sidebar";
-import Header from "./components/header";
+import Sidebar from "./components/sidebar/Sidebar";
+import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
 import "./layout.scss";
 import "./globals.css";
 
@@ -33,6 +34,10 @@ export default function RootLayout({
           </header>
 
           <main className="main-area">{children}</main>
+
+          <footer className="footer-area">
+            <Footer />
+          </footer>
         </div>
       </body>
     </html>

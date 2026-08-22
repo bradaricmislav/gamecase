@@ -1,0 +1,12 @@
+.collection-page {
+  padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+
+  &__grid {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}

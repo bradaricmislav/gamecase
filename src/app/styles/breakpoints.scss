@@ -1,0 +1,14 @@
+$breakpoints-down: (
+  "xl": 1279.98px,
+  "lg": 1023.98px,
+  "md": 767.98px,
+  "sm": 639.98px,
+);
+
+@mixin respond-down($breakpoint) {
+  @if map-has-key($breakpoints-down, $breakpoint) {
+    @media (max-width: map-get($breakpoints-down, $breakpoint)) {
+      @content;
+    }
+  }
+}

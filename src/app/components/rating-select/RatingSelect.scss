@@ -1,0 +1,71 @@
+.rating-box {
+  background: var(--element-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  height: 100%;
+
+  &__title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #4b5563;
+    letter-spacing: 1px;
+    display: block;
+    border-bottom: 1px solid var(--border-color);
+    margin: 0 -16px;
+    padding: 0 16px 12px 16px;
+  }
+
+  &__clear {
+    background: transparent;
+    border: none;
+    color: #4b5563;
+    font-size: 0.85rem;
+    margin-top: 12px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #9ca3af;
+    }
+  }
+}
+
+.rating-grid {
+  padding-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.rating-btn {
+  background: #161b22;
+  height: 50px;
+  border: none;
+  border-radius: 6px;
+  color: #38444d;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    color: #fff;
+  }
+
+  &.active {
+    color: #000;
+
+    &.active--red {
+      background-color: #ff4d4d;
+    }
+
+    &.active--yellow {
+      background-color: #ffc107;
+    }
+
+    &.active--green {
+      background-color: #4caf50;
+    }
+  }
+}

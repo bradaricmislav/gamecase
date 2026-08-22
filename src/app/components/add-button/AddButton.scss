@@ -1,0 +1,124 @@
+.add-button {
+  &__default {
+    padding: 8px 16px;
+    background-color: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #22c55e;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba(34, 197, 94, 0.2);
+      border-color: #22c55e;
+    }
+  }
+
+  &__badge {
+    padding: 8px 16px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &--playing {
+      color: #f97316;
+      border: 1px solid #f97316;
+      background: rgba(249, 115, 22, 0.15);
+    }
+
+    &--completed {
+      color: #22c55e;
+      border: 1px solid #22c55e;
+      background: rgba(34, 197, 94, 0.15);
+    }
+
+    &--wishlist {
+      color: #3b82f6;
+      border: 1px solid #3b82f6;
+      background: rgba(59, 130, 246, 0.15);
+    }
+
+    &--dropped {
+      color: #ef4444;
+      border: 1px solid #ef4444;
+      background: rgba(239, 68, 68, 0.15);
+    }
+  }
+
+  &__status-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    .status-btn {
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      border-radius: 4px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      opacity: 0.5;
+      transition: all 0.15s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      &.active {
+        opacity: 1;
+      }
+
+      &--playing {
+        color: #f97316;
+        border-color: rgba(249, 115, 22, 0.4);
+        &.active {
+          background: rgba(249, 115, 22, 0.15);
+          border-color: #f97316;
+        }
+      }
+
+      &--completed {
+        color: #22c55e;
+        border-color: rgba(34, 197, 94, 0.4);
+        &.active {
+          background: rgba(34, 197, 94, 0.15);
+          border-color: #22c55e;
+        }
+      }
+
+      &--wishlist {
+        color: #3b82f6;
+        border-color: rgba(59, 130, 246, 0.4);
+        &.active {
+          background: rgba(59, 130, 246, 0.15);
+          border-color: #3b82f6;
+        }
+      }
+
+      &--dropped {
+        color: #ef4444;
+        border-color: rgba(239, 68, 68, 0.4);
+        &.active {
+          background: rgba(239, 68, 68, 0.15);
+          border-color: #ef4444;
+        }
+      }
+
+      &--remove {
+        color: #94a3b8;
+        border-color: rgba(148, 163, 184, 0.2);
+        padding: 6px 8px;
+
+        &:hover {
+          color: #ef4444;
+          border-color: #ef4444;
+          background: rgba(239, 68, 68, 0.1);
+        }
+      }
+    }
+  }
+}

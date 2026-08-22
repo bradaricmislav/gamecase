@@ -1,0 +1,116 @@
+"use client";
+
+import { useState } from "react";
+import { GameStatus } from "@/generated/prisma/enums";
+import { upsertUserGame } from "@/app/actions/userGames";
+import "./AddButton.scss";
+
+interface AddButtonProps {
+  game: {
+    id: number;
+    title: string;
+    coverUrl?: string | null;
+    developer?: string | null;
+    genres?: string[];
+    releaseYear?: number | null;
+  };
+  initialStatus?: GameStatus | null;
+}
+
+export default function AddButton({
+  game,
+  initialStatus = null,
+}: AddButtonProps) {
+  const [status, setStatus] = useState<GameStatus | null>(initialStatus);
+  const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleStatusChange = async (newStatus: GameStatus) => {
+    setLoading(true);
+    setStatus(newStatus);
+
+    await upsertUserGame({
+      apiGameId: game.id,
+      title: game.title,
+      coverUrl: game.coverUrl,
+      developer: game.developer,
+      genre: game.genres?.[0] || null,
+      releaseYear: game.releaseYear,
+      status: newStatus,
+    });
+
+    setLoading(false);
+    setIsOpen(false);
+  };
+
+  const handleClose = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsOpen(false);
+  };
+
+  const handleOpen = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsOpen(true);
+  };
+
+  if (!isOpen && !status) {
+    return (
+      <button
+        className="add-button__default"
+        disabled={loading}
+        onClick={handleOpen}
+      >
+        + ADD
+      </button>
+    );
+  }
+
+  if (!isOpen && status) {
+    return (
+      <button
+        className={`add-button__badge add-button__badge--${status.toLowerCase()}`}
+        disabled={loading}
+        onClick={handleOpen}
+      >
+        {status}
+      </button>
+    );
+  }
+
+  return (
+    <div
+      className="add-button__status-group"
+      onClick={(e) => e.preventDefault()}
+    >
+      <button
+        className={`status-btn status-btn--playing ${status === GameStatus.PLAYING ? "active" : ""}`}
+        onClick={() => handleStatusChange(GameStatus.PLAYING)}
+      >
+        PLAYING
+      </button>
+      <button
+        className={`status-btn status-btn--completed ${status === GameStatus.COMPLETED ? "active" : ""}`}
+        onClick={() => handleStatusChange(GameStatus.COMPLETED)}
+      >
+        COMPLETED
+      </button>
+      <button
+        className={`status-btn status-btn--wishlist ${status === GameStatus.WISHLIST ? "active" : ""}`}
+        onClick={() => handleStatusChange(GameStatus.WISHLIST)}
+      >
+        WISHLIST
+      </button>
+      <button
+        className={`status-btn status-btn--dropped ${status === GameStatus.DROPPED ? "active" : ""}`}
+        onClick={() => handleStatusChange(GameStatus.DROPPED)}
+      >
+        DROPPED
+      </button>
+      <button className="status-btn status-btn--remove" onClick={handleClose}>
+        ✕
+      </button>
+    </div>
+  );
+}

@@ -10,15 +10,12 @@ export type GameSearchResult = {
   platforms: string[];
 };
 
-// 1. Pomoćna funkcija za dohvaćanje Twitch OAuth Tokena
 async function getTwitchAccessToken(): Promise<string | null> {
   const clientId = process.env.TWITCH_CLIENT_ID;
   const clientSecret = process.env.TWITCH_SECRET_ID;
 
   if (!clientId || !clientSecret) {
-    console.error(
-      "❌ GREŠKA: TWITCH_CLIENT_ID ili TWITCH_CLIENT_SECRET nisu postavljeni u .env.local!",
-    );
+    console.error("Twitch token error");
     return null;
   }
 
@@ -31,20 +28,24 @@ async function getTwitchAccessToken(): Promise<string | null> {
         client_secret: clientSecret,
         grant_type: "client_credentials",
       }),
-      next: { revalidate: 3600000 }, // Keširaj token (traje ~60 dana)
+      next: { revalidate: 3600000 },
     });
 
     if (!res.ok) return null;
     const data = await res.json();
     return data.access_token;
   } catch (error) {
-    console.error("💥 Greška pri dohvaćanju Twitch tokena:", error);
+    console.error("Error while accessing the token:", error);
     return null;
   }
 }
 
-// 2. Glavna funkcija za pretragu igara
-export async function searchGames(query: string): Promise<GameSearchResult[]> {
+export async function searchGames(
+  query: string,
+  genre?: string,
+  platform?: string,
+  sort?: string,
+) {
   if (!query || query.trim().length < 2) return [];
 
   const token = await getTwitchAccessToken();
@@ -53,10 +54,8 @@ export async function searchGames(query: string): Promise<GameSearchResult[]> {
   if (!token || !clientId) return [];
 
   try {
-    // Escaping navodnika u pretrazi da ne razbije IGDB upit
     const safeQuery = query.trim().replace(/"/g, '\\"');
 
-    // IGDB Apicalypse Upit: Dohvaćamo točna polja koja nam trebaju
     const queryBody = `
       search "${safeQuery}";
       fields name, cover.url, first_release_date, genres.name, platforms.name, summary, involved_companies.developer, involved_companies.company.name;
@@ -75,51 +74,75 @@ export async function searchGames(query: string): Promise<GameSearchResult[]> {
     });
 
     if (!res.ok) {
-      console.error("❌ IGDB API Greška status:", res.status);
+      console.error("IGDB API error status:", res.status);
       return [];
     }
 
     const games = await res.json();
 
-    return games.map((game: any) => {
-      // Slika: IGDB vraća "//images.igdb.com/.../t_thumb.jpg". Prevarit ćemo ga na HD sliku ("t_cover_big")
+    let mappedGames = games.map((game: any) => {
       let coverUrl: string | null = null;
       if (game.cover?.url) {
         coverUrl = `https:${game.cover.url.replace("t_thumb", "t_cover_big")}`;
       }
 
-      // Developer
       const devCompany = game.involved_companies?.find((c: any) => c.developer);
       const developerName = devCompany?.company?.name || null;
 
-      // Godina
       const parsedYear = game.first_release_date
         ? new Date(game.first_release_date * 1000).getFullYear()
         : null;
 
-      // Žanrovi
       const parsedGenres =
         game.genres?.map((g: any) => g.name).filter(Boolean) || [];
 
-      // Platforme (SADA RADI ODMAH IZ 1 POZIVA!)
       const parsedPlatforms =
         game.platforms?.map((p: any) => p.name).filter(Boolean) || [];
 
       return {
         id: game.id,
-        title: game.name || "Nepoznat naslov",
+        title: game.name || "Unknown title",
         coverUrl,
+
         developer: developerName,
         genres: parsedGenres,
         releaseYear: parsedYear,
         platforms: parsedPlatforms,
       };
     });
+
+    if (genre) {
+      const cleanGenre = genre.replace(/-/g, " ").toLowerCase();
+      mappedGames = mappedGames.filter((game: any) =>
+        game.genres.some((g: string) => g.toLowerCase().includes(cleanGenre)),
+      );
+    }
+
+    if (platform) {
+      const cleanPlatform = platform.toLowerCase();
+      mappedGames = mappedGames.filter((game: any) =>
+        game.platforms.some((p: string) =>
+          p.toLowerCase().includes(cleanPlatform),
+        ),
+      );
+    }
+
+    if (sort) {
+      mappedGames.sort((a: any, b: any) => {
+        const yearA = a.releaseYear || 0;
+        const yearB = b.releaseYear || 0;
+        return sort === "asc" ? yearA - yearB : yearB - yearA;
+      });
+    }
+
+    return mappedGames;
   } catch (error) {
-    console.error("💥 Greška pri pretrazi na IGDB-u:", error);
+    console.error("Error while searching on IGDB:", error);
     return [];
   }
 }
+
+import { getUserCollection } from "./userGames";
 
 export async function getGameDetails(id: string) {
   const token = await getTwitchAccessToken();
@@ -128,24 +151,31 @@ export async function getGameDetails(id: string) {
   if (!token || !clientId) return null;
 
   try {
-    const res = await fetch("https://api.igdb.com/v4/games", {
-      method: "POST",
-      headers: {
-        "Client-ID": clientId,
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "text/plain",
-      },
-      body: `
-        fields name, cover.url, first_release_date, genres.name, platforms.name, summary, storyline, rating, involved_companies.developer, involved_companies.company.name, screenshots.url;
-        where id = ${id};
-      `,
-      next: { revalidate: 86400 },
-    });
+    const [res, userCollection] = await Promise.all([
+      fetch("https://api.igdb.com/v4/games", {
+        method: "POST",
+        headers: {
+          "Client-ID": clientId,
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "text/plain",
+        },
+        body: `
+          fields name, cover.url, first_release_date, genres.name, platforms.name, summary, storyline, rating, involved_companies.developer, involved_companies.company.name, screenshots.url;
+          where id = ${id};
+        `,
+        next: { revalidate: 86400 },
+      }),
+      getUserCollection(),
+    ]);
 
     if (!res.ok) return null;
 
     const [game] = await res.json();
     if (!game) return null;
+
+    const userGame = userCollection.find(
+      (ug) => String(ug.apiGameId) === String(id),
+    );
 
     const coverUrl = game.cover?.url
       ? `https:${game.cover.url.replace("t_thumb", "t_cover_big")}`
@@ -162,15 +192,18 @@ export async function getGameDetails(id: string) {
       title: game.name,
       coverUrl,
       backdropUrl,
-      developer: devCompany?.company?.name || "Nepoznat developer",
+      developer: devCompany?.company?.name || "Unknown developer",
       releaseYear: game.first_release_date
         ? new Date(game.first_release_date * 1000).getFullYear()
         : null,
-      rating: game.rating ? Math.round(game.rating / 10) : null,
+      rating: userGame?.rating ?? null,
+      igdbRating: game.rating ? Math.round(game.rating / 10) : null,
       genres: game.genres?.map((g: any) => g.name) || [],
       platforms: game.platforms?.map((p: any) => p.name) || [],
       summary:
-        game.summary || game.storyline || "Nema dostupnog opisa za ovu igru.",
+        game.summary ||
+        game.storyline ||
+        "There is no description available for this game.",
     };
   } catch (error) {
     console.error("Could not fetch game details: ", error);

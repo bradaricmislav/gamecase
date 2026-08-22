@@ -1,0 +1,192 @@
+@import "../../styles/breakpoints.scss";
+
+.game-card {
+  display: flex;
+  width: 100%;
+  list-style: none;
+  border-bottom: 1px solid var(--border-color);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    gap: 16px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+  }
+
+  &__game-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  &__game-cover {
+    width: 90px;
+    height: 130px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 6px;
+    background-color: #0b0e14;
+    flex-shrink: 0;
+  }
+
+  &__game-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    height: 48px;
+    width: 48px;
+    min-width: 48px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  &__game-details {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__game-title {
+    color: var(--white-text-color);
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__game-meta {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+    font-size: 0.8rem;
+
+    li {
+      display: flex;
+      align-items: center;
+
+      &:not(:last-child)::after {
+        content: "•";
+        margin-left: 8px;
+        opacity: 0.5;
+      }
+    }
+  }
+
+  &__status {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  &__game-hours-played {
+    color: var(--text-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  &__game-status {
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  @include respond-down("lg") {
+    &__link {
+      gap: 12px;
+    }
+
+    &__game-cover {
+      width: 70px;
+      height: 100px;
+    }
+
+    &__game-info {
+      gap: 10px;
+    }
+
+    &__game-rating {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      font-size: 1rem;
+    }
+
+    &__game-title {
+      font-size: 0.95rem;
+    }
+
+    &__status {
+      gap: 8px;
+    }
+  }
+
+  @include respond-down("md") {
+    &__link {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    &__game-info {
+      grid-column: 1 / -1;
+    }
+
+    &__status {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    &__game-cover {
+      width: 60px;
+      height: 85px;
+    }
+
+    &__game-meta {
+      font-size: 0.75rem;
+      gap: 4px;
+
+      li:not(:last-child)::after {
+        margin-left: 4px;
+      }
+    }
+  }
+}

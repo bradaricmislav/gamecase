@@ -1,15 +1,23 @@
 :root {
   --bg-color: #0c0f19;
-  --header-bg-color: #0a0d16;
+  --element-bg-color: #0a0d16;
   --text-color: #808389;
   --green-badge-color: #66cc33;
   --green-badge-text-color: #0a1800;
   --sign-out-btn-text-color: #2e3f58;
   --border-color: #1a1f2c;
   --input-color: #141922;
+  --gray-container-color: #141922;
   --input-text-color: #f0f2f5;
   --card-blue-color: #161822;
   --dark-text-color: #1e2a3a;
+  --white-text-color: #f0f2f5;
+  --text-dark-gray-color: #2e3f58;
+  --green-color: #66cc33;
+  --yellow-color: #f59e0b;
+  --blue-color: #38bdf8;
+  --light-gray-color: #6b7a99;
+  --container-bg-color: #0e1220;
 }
 
 .light {

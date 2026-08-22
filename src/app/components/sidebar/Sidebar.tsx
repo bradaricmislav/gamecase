@@ -1,9 +1,12 @@
 import SidebarNav from "./SidebarClient";
 import { getUserStats } from "@/app/actions/userGames";
+import { getCurrentUser } from "@/app/actions/auth";
+import { getInitials } from "@/app/utils/functions";
 import "./Sidebar.scss";
 
 export default async function Sidebar() {
   const stats = await getUserStats();
+  const username = await getCurrentUser();
 
   return (
     <aside className="sidebar">
@@ -20,13 +23,15 @@ export default async function Sidebar() {
         <SidebarNav stats={stats} />
       </div>
 
-      <div className="user-footer">
-        <div className="avatar">A</div>
-        <div className="user-details">
-          <span className="user-name">Alex Rivera</span>
-          <span className="user-stats">{stats.totalCount} games tracked</span>
+      {username ? (
+        <div className="user-footer">
+          <div className="avatar">{getInitials(username ?? "")}</div>
+          <div className="user-details">
+            <span className="user-name">{username}</span>
+            <span className="user-stats">{stats.totalCount} games tracked</span>
+          </div>
         </div>
-      </div>
+      ) : null}
     </aside>
   );
 }

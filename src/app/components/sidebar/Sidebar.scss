@@ -110,6 +110,12 @@ $accent-blue: #3b82f6;
 
   .status-group {
     margin-top: 2.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+
+    &:last-child {
+      border: none;
+    }
 
     .status-title {
       font-size: 0.7rem;

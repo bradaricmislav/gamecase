@@ -9,6 +9,16 @@
     }
   }
 
+  &__empty {
+    p {
+      color: var(--white-text-color);
+    }
+  }
+
+  &__explore-btn {
+    color: var(--white-text-color);
+  }
+
   &__grid {
     padding: 0;
     display: flex;

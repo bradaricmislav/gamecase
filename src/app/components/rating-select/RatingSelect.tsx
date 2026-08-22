@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { upsertUserGame } from "@/app/actions/userGames";
+import { getCurrentUser } from "@/app/actions/auth";
 import "./RatingSelect.scss";
 
 interface RatingSelectProps {
@@ -30,12 +32,22 @@ function RatingSelect({
   onChange,
   onHoverChange,
 }: RatingSelectProps) {
+  const router = useRouter();
   const [selectedRating, setSelectedRating] = useState<number | null>(
     initialRating,
   );
   const [hoverRating, setHoverRating] = useState<number | null>(null);
 
   const activeRating = hoverRating ?? selectedRating;
+
+  const checkAuthAndExecute = async (action: () => Promise<void>) => {
+    const user = await getCurrentUser();
+    if (!user) {
+      router.push("/auth/login");
+      return;
+    }
+    await action();
+  };
 
   const handleMouseEnter = (num: number) => {
     setHoverRating(num);
@@ -59,21 +71,25 @@ function RatingSelect({
     });
   };
 
-  const handleSelect = async (num: number) => {
-    const nextRating = selectedRating === num ? null : num;
+  const handleSelect = (num: number) => {
+    checkAuthAndExecute(async () => {
+      const nextRating = selectedRating === num ? null : num;
 
-    setSelectedRating(nextRating);
-    onChange?.(nextRating);
+      setSelectedRating(nextRating);
+      onChange?.(nextRating);
 
-    await saveRatingToDb(nextRating);
+      await saveRatingToDb(nextRating);
+    });
   };
 
-  const handleClear = async () => {
-    setSelectedRating(null);
-    onChange?.(null);
-    onHoverChange?.(null);
+  const handleClear = () => {
+    checkAuthAndExecute(async () => {
+      setSelectedRating(null);
+      onChange?.(null);
+      onHoverChange?.(null);
 
-    await saveRatingToDb(null);
+      await saveRatingToDb(null);
+    });
   };
 
   return (

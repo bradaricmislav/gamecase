@@ -12,6 +12,25 @@ async function Dashboard() {
   const stats = await getUserStats();
   const topGames = await getTopRatedGames();
 
+  const isEmpty = !stats || stats.totalCount === 0;
+
+  if (isEmpty) {
+    return (
+      <main className="dashboard">
+        <h1>Dashboard</h1>
+        <div className="dashboard__empty">
+          <h2>Your collection is empty</h2>
+          <p>
+            There are no games in your collection yet. Go to search to add them.
+          </p>
+          <Link href="/browse" className="dashboard__empty-btn">
+            Search and add games
+          </Link>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="dashboard">
       <h1>Dashboard</h1>
@@ -36,11 +55,15 @@ async function Dashboard() {
               </svg>
             </Link>
           </div>
-          <ul className="dashboard__top-rated-list">
-            {topGames.map((game) => (
-              <CollectionGameCard key={game.id} game={game} />
-            ))}
-          </ul>
+          {topGames.length > 0 ? (
+            <ul className="dashboard__top-rated-list">
+              {topGames.map((game) => (
+                <CollectionGameCard key={game.id} game={game} />
+              ))}
+            </ul>
+          ) : (
+            <p className="dashboard__empty-text">No rated games yet.</p>
+          )}
         </section>
         <section className="dashboard__score-chart">
           <div className="dashboard__section-header">

@@ -21,6 +21,7 @@
   --track-color: #141922;
   --hover-color-1: #262c3a;
   --hover-color-2: rgba(255, 255, 255, 0.06);
+  --auth-bg-color: #090d14;
 }
 
 .light {
@@ -35,4 +36,5 @@
   --input-text-color: #0c0f19;
   --hover-color-1: #dddddf;
   --hover-color-2: rgba(0, 0, 0, 0.05);
+  --auth-bg-color: #f3f4f6;
 }

@@ -1,28 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "../lib/prisma";
 import { GameStatus } from "@/generated/prisma/enums";
 import { CollectionGame } from "../components/collection-game-card/CollectionGameCard";
-
-const DEMO_USER_ID = "demo-user-123";
-
-async function ensureDemoUserExists() {
-  const user = await prisma.user.findUnique({
-    where: { id: DEMO_USER_ID },
-  });
-
-  if (!user) {
-    await prisma.user.create({
-      data: {
-        id: DEMO_USER_ID,
-        username: "demouser",
-        email: "demo@example.com",
-        password: "hashed_password",
-      },
-    });
-  }
-}
+import { getSessionUser } from "./auth";
 
 export type UpsertGameInput = {
   apiGameId: number;
@@ -39,7 +21,10 @@ export type UpsertGameInput = {
 
 export async function upsertUserGame(input: UpsertGameInput) {
   try {
-    await ensureDemoUserExists();
+    const session = await getSessionUser();
+    if (!session) {
+      return { success: false, error: "Unauthorized. Please log in." };
+    }
 
     const newRating =
       input.status === GameStatus.WISHLIST ? null : input.rating;
@@ -47,7 +32,7 @@ export async function upsertUserGame(input: UpsertGameInput) {
     const userGame = await prisma.userGame.upsert({
       where: {
         userId_apiGameId: {
-          userId: DEMO_USER_ID,
+          userId: session.userId,
           apiGameId: input.apiGameId,
         },
       },
@@ -63,7 +48,7 @@ export async function upsertUserGame(input: UpsertGameInput) {
         ...(input.coverUrl && { coverUrl: input.coverUrl }),
       },
       create: {
-        userId: DEMO_USER_ID,
+        userId: session.userId,
         apiGameId: input.apiGameId,
         title: input.title,
         coverUrl: input.coverUrl ?? null,
@@ -90,10 +75,13 @@ export async function upsertUserGame(input: UpsertGameInput) {
 
 export async function getUserGameDetails(apiGameId: number) {
   try {
+    const session = await getSessionUser();
+    if (!session) return null;
+
     const userGame = await prisma.userGame.findUnique({
       where: {
         userId_apiGameId: {
-          userId: DEMO_USER_ID,
+          userId: session.userId,
           apiGameId,
         },
       },
@@ -108,9 +96,12 @@ export async function getUserGameDetails(apiGameId: number) {
 
 export async function getUserCollection() {
   try {
+    const session = await getSessionUser();
+    if (!session) return [];
+
     const collection = await prisma.userGame.findMany({
       where: {
-        userId: DEMO_USER_ID,
+        userId: session.userId,
       },
       orderBy: {
         updatedAt: "desc",
@@ -126,10 +117,15 @@ export async function getUserCollection() {
 
 export async function removeUserGame(apiGameId: number) {
   try {
+    const session = await getSessionUser();
+    if (!session) {
+      return { success: false, error: "Unauthorized. Please log in." };
+    }
+
     await prisma.userGame.delete({
       where: {
         userId_apiGameId: {
-          userId: DEMO_USER_ID,
+          userId: session.userId,
           apiGameId,
         },
       },
@@ -147,9 +143,25 @@ export async function removeUserGame(apiGameId: number) {
 
 export async function getUserStats() {
   try {
+    const session = await getSessionUser();
+    if (!session) {
+      return {
+        avgRating: 0,
+        ratedGamesCount: 0,
+        totalCount: 0,
+        playingCount: 0,
+        completedCount: 0,
+        wishlistCount: 0,
+        droppedCount: 0,
+        totalHours: 0,
+        favoritesCount: 0,
+        disappointmentsCount: 0,
+      };
+    }
+
     const games = await prisma.userGame.findMany({
       where: {
-        userId: DEMO_USER_ID,
+        userId: session.userId,
       },
       select: {
         status: true,
@@ -227,9 +239,12 @@ export async function getUserStats() {
 
 export async function getTopRatedGames(limit = 6): Promise<CollectionGame[]> {
   try {
+    const session = await getSessionUser();
+    if (!session) return [];
+
     const topGames = await prisma.userGame.findMany({
       where: {
-        userId: DEMO_USER_ID,
+        userId: session.userId,
         rating: { not: null },
       },
       orderBy: {
@@ -245,11 +260,14 @@ export async function getTopRatedGames(limit = 6): Promise<CollectionGame[]> {
   }
 }
 
-export async function getFavoriteGames(userId: string) {
+export async function getFavoriteGames() {
   try {
+    const session = await getSessionUser();
+    if (!session) return [];
+
     const collection = await prisma.userGame.findMany({
       where: {
-        userId: userId,
+        userId: session.userId,
         rating: 10,
       },
       orderBy: { updatedAt: "desc" },

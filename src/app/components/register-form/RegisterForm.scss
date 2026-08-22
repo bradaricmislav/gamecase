@@ -1,0 +1,219 @@
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--container-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: var(--green-badge-color);
+    color: var(--green-badge-text-color);
+    border-radius: 8px;
+  }
+
+  &__brand-name {
+    color: var(--white-text-color);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+  }
+
+  &__toggle {
+    display: flex;
+    background-color: var(--element-bg-color);
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+  }
+
+  &__toggle-btn {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    &--active {
+      background-color: var(--green-badge-color);
+      color: var(--green-badge-text-color);
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--white-text-color);
+    margin: 0 0 6px 0;
+    letter-spacing: 0.5px;
+  }
+
+  &__subtitle {
+    font-size: 0.875rem;
+    color: var(--text-color);
+    margin: 0 0 24px 0;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__label {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    font-weight: 500;
+  }
+
+  &__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__input {
+    width: 100%;
+    background-color: var(--input-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--input-text-color);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+
+    &::placeholder {
+      color: var(--light-gray-color);
+    }
+
+    &:focus {
+      border-color: var(--green-badge-color);
+    }
+  }
+
+  &__eye-btn {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: var(--white-text-color);
+    }
+  }
+
+  &__submit-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--green-badge-color);
+    color: var(--green-badge-text-color);
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    margin-top: 6px;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &__footer-text {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-color);
+    margin: 20px 0 24px 0;
+  }
+
+  &__register-link {
+    color: var(--green-badge-color);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__info-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--hover-color-2);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+
+  &__info-icon {
+    color: var(--green-badge-color);
+    flex-shrink: 0;
+  }
+
+  &__info-text {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    line-height: 1.4;
+
+    strong {
+      color: var(--white-text-color);
+    }
+  }
+
+  &__error-box {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  &__input--error {
+    border-color: #ef4444 !important;
+  }
+}

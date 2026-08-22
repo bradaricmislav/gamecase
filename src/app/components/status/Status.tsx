@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { upsertUserGame } from "@/app/actions/userGames";
+import { getCurrentUser } from "@/app/actions/auth";
 import { GameStatus } from "@/generated/prisma/enums";
 import "./Status.scss";
 
@@ -55,9 +57,19 @@ export default function StatusSelect({
   initialStatus = null,
   onChange,
 }: StatusSelectProps) {
+  const router = useRouter();
   const [selectedStatus, setSelectedStatus] = useState<GameStatus | null>(
     initialStatus,
   );
+
+  const checkAuthAndExecute = async (action: () => Promise<void>) => {
+    const user = await getCurrentUser();
+    if (!user) {
+      router.push("/auth/login");
+      return;
+    }
+    await action();
+  };
 
   const saveStatusToDb = async (status: GameStatus | null) => {
     if (!game || !game.id) {
@@ -78,13 +90,15 @@ export default function StatusSelect({
     });
   };
 
-  const handleSelect = async (id: GameStatus) => {
-    const nextStatus = selectedStatus === id ? null : id;
+  const handleSelect = (id: GameStatus) => {
+    checkAuthAndExecute(async () => {
+      const nextStatus = selectedStatus === id ? null : id;
 
-    setSelectedStatus(nextStatus);
-    onChange?.(nextStatus);
+      setSelectedStatus(nextStatus);
+      onChange?.(nextStatus);
 
-    await saveStatusToDb(nextStatus);
+      await saveStatusToDb(nextStatus);
+    });
   };
 
   return (

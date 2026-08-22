@@ -3,6 +3,12 @@
 .dashboard {
   padding: 0 30px 20px 30px;
 
+  &__empty,
+  &__empty-btn,
+  &__empty-text {
+    color: var(--white-text-color);
+  }
+
   h1 {
     color: var(--white-text-color);
   }

@@ -2,8 +2,10 @@
 
 import { useState, useTransition } from "react";
 import { upsertUserGame, removeUserGame } from "@/app/actions/userGames";
+import { getCurrentUser } from "@/app/actions/auth";
 import { createPortal } from "react-dom";
 import "./GameHeroActions.scss";
+import { useRouter } from "next/navigation";
 
 interface GameHeroActionsProps {
   gameData: {
@@ -36,6 +38,17 @@ export default function GameHeroActions({
 
   const isInCollection = Boolean(userGame);
 
+  const router = useRouter();
+
+  const handleOpenModal = async (modalType: "hours" | "review") => {
+    const user = await getCurrentUser();
+    if (!user) {
+      router.push("/auth/login");
+      return;
+    }
+    setActiveModal(modalType);
+  };
+
   const handleSaveHours = () => {
     startTransition(async () => {
       await upsertUserGame({
@@ -62,7 +75,13 @@ export default function GameHeroActions({
     });
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    const user = await getCurrentUser();
+    if (!user) {
+      router.push("/auth/login");
+      return;
+    }
+
     if (
       !confirm(
         `Are you sure you want to remove "${gameData.title}" from your library?`,
@@ -72,6 +91,7 @@ export default function GameHeroActions({
 
     startTransition(async () => {
       await removeUserGame(gameData.id);
+      router.push("/mycollection");
     });
   };
 
@@ -81,7 +101,7 @@ export default function GameHeroActions({
         <button
           type="button"
           className="hero-actions__btn"
-          onClick={() => setActiveModal("hours")}
+          onClick={() => handleOpenModal("hours")}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +118,7 @@ export default function GameHeroActions({
         <button
           type="button"
           className="hero-actions__btn"
-          onClick={() => setActiveModal("review")}
+          onClick={() => handleOpenModal("review")}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

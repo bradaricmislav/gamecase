@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { GameStatus } from "@/generated/prisma/enums";
 import { upsertUserGame } from "@/app/actions/userGames";
+import { getCurrentUser } from "@/app/actions/auth";
 import "./AddButton.scss";
 
 interface AddButtonProps {
@@ -21,26 +23,38 @@ export default function AddButton({
   game,
   initialStatus = null,
 }: AddButtonProps) {
+  const router = useRouter();
   const [status, setStatus] = useState<GameStatus | null>(initialStatus);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleStatusChange = async (newStatus: GameStatus) => {
-    setLoading(true);
-    setStatus(newStatus);
+  const checkAuthAndExecute = async (action: () => Promise<void>) => {
+    const user = await getCurrentUser();
+    if (!user) {
+      router.push("/auth/login");
+      return;
+    }
+    await action();
+  };
 
-    await upsertUserGame({
-      apiGameId: game.id,
-      title: game.title,
-      coverUrl: game.coverUrl,
-      developer: game.developer,
-      genre: game.genres?.[0] || null,
-      releaseYear: game.releaseYear,
-      status: newStatus,
+  const handleStatusChange = (newStatus: GameStatus) => {
+    checkAuthAndExecute(async () => {
+      setLoading(true);
+      setStatus(newStatus);
+
+      await upsertUserGame({
+        apiGameId: game.id,
+        title: game.title,
+        coverUrl: game.coverUrl,
+        developer: game.developer,
+        genre: game.genres?.[0] || null,
+        releaseYear: game.releaseYear,
+        status: newStatus,
+      });
+
+      setLoading(false);
+      setIsOpen(false);
     });
-
-    setLoading(false);
-    setIsOpen(false);
   };
 
   const handleClose = (e: React.MouseEvent) => {
@@ -52,7 +66,9 @@ export default function AddButton({
   const handleOpen = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsOpen(true);
+    checkAuthAndExecute(async () => {
+      setIsOpen(true);
+    });
   };
 
   if (!isOpen && !status) {

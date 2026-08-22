@@ -9,7 +9,7 @@
   --input-color: #141922;
   --gray-container-color: #141922;
   --input-text-color: #f0f2f5;
-  --card-blue-color: #161822;
+  --list-card-color: #161822;
   --dark-text-color: #1e2a3a;
   --white-text-color: #f0f2f5;
   --text-dark-gray-color: #2e3f58;
@@ -18,8 +18,21 @@
   --blue-color: #38bdf8;
   --light-gray-color: #6b7a99;
   --container-bg-color: #0e1220;
+  --track-color: #141922;
+  --hover-color-1: #262c3a;
+  --hover-color-2: rgba(255, 255, 255, 0.06);
 }
 
 .light {
-  --header-bg-color: #f4f7fd;
+  --bg-color: #eef1f8;
+  --element-bg-color: #f4f7fd;
+  --white-text-color: #141922;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --container-bg-color: #ffffff;
+  --track-color: #ebebeb;
+  --input-color: #f4f7fd;
+  --list-card-color: #e5e8ee;
+  --input-text-color: #0c0f19;
+  --hover-color-1: #dddddf;
+  --hover-color-2: rgba(0, 0, 0, 0.05);
 }

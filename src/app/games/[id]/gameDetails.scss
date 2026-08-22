@@ -238,6 +238,12 @@
     font-size: 0.85rem;
     color: var(--text-color);
   }
+
+  &__user-review {
+    p {
+      color: var(--text-color);
+    }
+  }
 }
 
 .back-btn {

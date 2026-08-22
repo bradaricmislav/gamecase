@@ -65,12 +65,6 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
                     alt={game.title}
                   />
 
-                  {userGame?.rating && (
-                    <span className="games-list__game-rating">
-                      {userGame.rating}
-                    </span>
-                  )}
-
                   <div className="games-list__game-details">
                     <h2>{game.title}</h2>
                     <ul className="games-list__game-meta">

@@ -3,6 +3,12 @@
   display: flex;
   flex-direction: column;
 
+  &__header {
+    h1 {
+      color: var(--white-text-color);
+    }
+  }
+
   &__grid {
     padding: 0;
     display: flex;

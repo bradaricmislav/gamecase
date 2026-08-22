@@ -59,16 +59,16 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(4px);
-  z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 16px;
+  z-index: 9999;
 }
 
 .modal-content {
-  background: #0b0e14;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--container-bg-color);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1.5rem;
   width: 100%;
@@ -79,17 +79,17 @@
 
   h3 {
     margin: 0;
-    color: #fff;
+    color: var(--white-text-color);
     font-size: 1.25rem;
   }
 
   input,
   textarea {
-    background: #161b22;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--input-color);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 0.75rem;
-    color: #fff;
+    color: var(--white-text-color);
     font-family: inherit;
     font-size: 0.95rem;
 

@@ -3,6 +3,10 @@
 .dashboard {
   padding: 0 30px 20px 30px;
 
+  h1 {
+    color: var(--white-text-color);
+  }
+
   &__grid {
     display: grid;
     grid-template-columns: 1fr 360px;
@@ -15,6 +19,10 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
+
+    h2 {
+      color: var(--white-text-color);
+    }
   }
 
   &__top-rated-link,

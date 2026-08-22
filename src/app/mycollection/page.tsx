@@ -1,6 +1,6 @@
 import { getUserCollection } from "../actions/userGames";
 import MyCollectionClient from "./CollectionClient";
-import "./mycollection.scss";
+import "./Collection.scss";
 
 export default async function MyCollection() {
   const userGames = await getUserCollection();

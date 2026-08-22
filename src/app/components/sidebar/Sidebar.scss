@@ -1,6 +1,5 @@
 $bg-sidebar: #0b0e14;
 $border-color: #1a1f2c;
-$text-main: #ffffff;
 $text-muted: #8b949e;
 $accent-green: #10b981;
 $accent-blue: #3b82f6;
@@ -26,7 +25,7 @@ $accent-blue: #3b82f6;
     font-weight: 900;
     font-size: 1.25rem;
     letter-spacing: 0.08em;
-    color: $text-main;
+    color: var(--white-text-color);
     padding: 0 0.75rem;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 20px;
@@ -97,13 +96,13 @@ $accent-blue: #3b82f6;
       transition: all 0.2s ease;
 
       &:hover {
-        color: $text-main;
-        background-color: rgba(255, 255, 255, 0.03);
+        color: var(--white-text-color);
+        background-color: var(--hover-color-2);
       }
 
       &.active {
-        color: $text-main;
-        background-color: rgba(255, 255, 255, 0.06);
+        color: var(--white-text-color);
+        background-color: var(--hover-color-2);
         border-left: 2px solid var(--green-badge-color);
       }
     }
@@ -146,12 +145,13 @@ $accent-blue: #3b82f6;
         transition: color 0.2s;
 
         &.active {
-          color: $text-main;
-          background-color: rgba(255, 255, 255, 0.06);
+          color: var(--white-text-color);
+          background-color: var(--hover-color-2);
         }
 
         &:hover {
-          color: $text-main;
+          color: var(--white-text-color);
+          background-color: var(--hover-color-2);
         }
 
         .status-dot {
@@ -193,7 +193,7 @@ $accent-blue: #3b82f6;
 
   .user-footer {
     padding-top: 1rem;
-    border-top: 1px solid $border-color;
+    border-top: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -219,7 +219,7 @@ $accent-blue: #3b82f6;
       .user-name {
         font-size: 0.85rem;
         font-weight: 600;
-        color: $text-main;
+        color: var(--white-text-color);
         line-height: 1.2;
       }
 

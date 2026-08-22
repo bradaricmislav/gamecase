@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { upsertUserGame, removeUserGame } from "@/app/actions/userGames";
+import { createPortal } from "react-dom";
 import "./GameHeroActions.scss";
 
 interface GameHeroActionsProps {
@@ -132,66 +133,70 @@ export default function GameHeroActions({
         )}
       </div>
 
-      {activeModal === "hours" && (
-        <div className="modal-overlay" onClick={() => setActiveModal(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>Log Hours Played</h3>
-            <input
-              type="number"
-              min="0"
-              value={hoursPlayed}
-              onChange={(e) =>
-                setHoursPlayed(Math.max(0, Number(e.target.value)))
-              }
-              placeholder="e.g. 25"
-            />
-            <div className="modal-actions">
-              <button
-                className="btn-cancel"
-                onClick={() => setActiveModal(null)}
-              >
-                Cancel
-              </button>
-              <button
-                className="btn-save"
-                onClick={handleSaveHours}
-                disabled={isPending}
-              >
-                {isPending ? "Saving..." : "Save Hours"}
-              </button>
+      {activeModal === "hours" &&
+        createPortal(
+          <div className="modal-overlay" onClick={() => setActiveModal(null)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <h3>Log Hours Played</h3>
+              <input
+                type="number"
+                min="0"
+                value={hoursPlayed}
+                onChange={(e) =>
+                  setHoursPlayed(Math.max(0, Number(e.target.value)))
+                }
+                placeholder="e.g. 25"
+              />
+              <div className="modal-actions">
+                <button
+                  className="btn-cancel"
+                  onClick={() => setActiveModal(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="btn-save"
+                  onClick={handleSaveHours}
+                  disabled={isPending}
+                >
+                  {isPending ? "Saving..." : "Save Hours"}
+                </button>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
 
-      {activeModal === "review" && (
-        <div className="modal-overlay" onClick={() => setActiveModal(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>Write Review</h3>
-            <textarea
-              rows={5}
-              value={review}
-              onChange={(e) => setReview(e.target.value)}
-              placeholder="Write your thoughts on this game..."
-            />
-            <div className="modal-actions">
-              <button
-                className="btn-cancel"
-                onClick={() => setActiveModal(null)}
-              >
-                Cancel
-              </button>
-              <button
-                className="btn-save"
-                onClick={handleSaveReview}
-                disabled={isPending}
-              >
-                {isPending ? "Saving..." : "Save Review"}
-              </button>
+      {activeModal === "review" &&
+        createPortal(
+          <div className="modal-overlay" onClick={() => setActiveModal(null)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <h3>Write Review</h3>
+              <textarea
+                rows={5}
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
+                placeholder="Write your thoughts on this game..."
+              />
+              <div className="modal-actions">
+                <button
+                  className="btn-cancel"
+                  onClick={() => setActiveModal(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="btn-save"
+                  onClick={handleSaveReview}
+                  disabled={isPending}
+                >
+                  {isPending ? "Saving..." : "Save Review"}
+                </button>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </>
   );
 }

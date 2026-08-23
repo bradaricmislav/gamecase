@@ -12,7 +12,7 @@ async function ScoreBreakdown() {
   const games = await getUserCollection();
 
   const gamesPerRating = (rating: number) => {
-    return games.filter((game) => game.rating === rating).length;
+    return games.filter((game: any) => game.rating === rating).length;
   };
 
   return (

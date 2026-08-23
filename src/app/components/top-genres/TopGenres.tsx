@@ -5,7 +5,7 @@ async function TopGenres() {
   const games = await getUserCollection();
   const topGenres: { name: string | null; count: number }[] = [];
 
-  games.forEach((game) => {
+  games.forEach((game: any) => {
     const genreName = game.genre;
 
     const existingGenre = topGenres.find((item) => item.name === genreName);

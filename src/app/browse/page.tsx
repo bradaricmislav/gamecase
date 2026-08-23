@@ -24,11 +24,12 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
 
   const [games, userCollection] = await Promise.all([
     searchGames(query || "", genre, platform, sort),
-    getUserCollection(),
+    getUserCollection() as Promise<any[]>,
   ]);
 
-  const userGamesMap = new Map(userCollection.map((ug) => [ug.apiGameId, ug]));
-
+  const userGamesMap = new Map<any, any>(
+    (userCollection || []).map((ug: any) => [ug.apiGameId, ug]),
+  );
   return (
     <div className="browse-container">
       <h1>BROWSE GAMES</h1>

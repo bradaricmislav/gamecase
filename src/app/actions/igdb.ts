@@ -174,7 +174,7 @@ export async function getGameDetails(id: string) {
     if (!game) return null;
 
     const userGame = userCollection.find(
-      (ug) => String(ug.apiGameId) === String(id),
+      (ug: any) => String(ug.apiGameId) === String(id),
     );
 
     const coverUrl = game.cover?.url

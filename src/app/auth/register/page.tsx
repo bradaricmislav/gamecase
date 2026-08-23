@@ -1,12 +1,15 @@
-import "./Register.scss";
+import { Suspense } from "react";
 import RegisterForm from "@/app/components/register-form/RegisterForm";
+import "./Register.scss";
 
-function Register() {
+export const dynamic = "force-dynamic";
+
+export default function Register() {
   return (
     <main className="register-page">
-      <RegisterForm />
+      <Suspense fallback={<div>Loading...</div>}>
+        <RegisterForm />
+      </Suspense>
     </main>
   );
 }
-
-export default Register;

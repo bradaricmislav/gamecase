@@ -1,29 +1,99 @@
-.search-form {
-  background-color: var(--input-color);
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--border-color);
-  padding: 8px 16px 8px 8px;
-  border-radius: 8px;
+.search-bar-container {
+  position: relative;
   width: calc(100% * 2 / 3);
 
-  &:focus {
-    border-color: var(--green-badge-color);
+  .search-form {
+    background-color: var(--input-color);
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    padding: 8px 16px 8px 8px;
+    border-radius: 8px;
+    width: 100%; // Širina se sada kontrolira preko .search-bar-container
+
+    &:focus-within {
+      border-color: var(--green-badge-color);
+    }
+
+    &__submit {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    &__input {
+      background: none;
+      border: none;
+      width: 100%;
+      color: var(--input-text-color);
+      outline: none;
+
+      &::placeholder {
+        color: var(--text-color);
+      }
+    }
   }
 
-  &__submit {
-    background: none;
-    border: none;
-  }
-
-  &__input {
-    background: none;
-    border: none;
+  .search-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
     width: 100%;
-    color: var(--input-text-color);
-    outline: none;
+    max-height: 380px;
+    overflow-y: auto;
+    background-color: var(--container-bg-color, #0f172a);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    z-index: 100;
 
-    &::placeholder {
+    &__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-color);
+      text-decoration: none;
+      color: inherit;
+      transition: background-color 0.2s ease;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: var(--hover-color-2);
+      }
+    }
+
+    &__cover {
+      width: 36px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: hidden;
+    }
+
+    &__title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--white-text-color, #fff);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &__meta {
+      font-size: 0.75rem;
       color: var(--text-color);
     }
   }

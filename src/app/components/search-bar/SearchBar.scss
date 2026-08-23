@@ -9,7 +9,7 @@
     border: 1px solid var(--border-color);
     padding: 8px 16px 8px 8px;
     border-radius: 8px;
-    width: 100%; // Širina se sada kontrolira preko .search-bar-container
+    width: 100%;
 
     &:focus-within {
       border-color: var(--green-badge-color);

@@ -1,4 +1,4 @@
-@import "../styles/breakpoints.scss";
+@use "../styles/breakpoints.scss" as *;
 
 .dashboard {
   padding: 0 30px 20px 30px;

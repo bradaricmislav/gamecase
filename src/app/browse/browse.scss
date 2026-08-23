@@ -1,4 +1,4 @@
-@import "../styles/breakpoints.scss";
+@use "../styles/breakpoints.scss" as *;
 
 .browse-container {
   padding: 0 30px;

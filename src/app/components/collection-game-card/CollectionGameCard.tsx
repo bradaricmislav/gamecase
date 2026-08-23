@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GameStatus } from "@/generated/prisma/enums";
+import { GameStatus } from "@/generated/prisma";
 import "./CollectionGameCard.scss";
 
 export interface CollectionGame {

@@ -1,3 +1,5 @@
+@use "sass:map";
+
 $breakpoints-down: (
   "xl": 1279.98px,
   "lg": 1023.98px,
@@ -6,8 +8,8 @@ $breakpoints-down: (
 );
 
 @mixin respond-down($breakpoint) {
-  @if map-has-key($breakpoints-down, $breakpoint) {
-    @media (max-width: map-get($breakpoints-down, $breakpoint)) {
+  @if map.has-key($breakpoints-down, $breakpoint) {
+    @media (max-width: map.get($breakpoints-down, $breakpoint)) {
       @content;
     }
   }

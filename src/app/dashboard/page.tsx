@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import StatsOverview from "../components/stats-overview/StatsOverview";
 import { getTopRatedGames, getUserStats } from "../actions/userGames";
 import CollectionGameCard from "../components/collection-game-card/CollectionGameCard";
@@ -7,6 +8,8 @@ import CurrentlyPlaying from "../components/currently-playing/CurrentlyPlaying";
 import Statuses from "../components/statuses/Statuses";
 import Link from "next/link";
 import "./Dashboard.scss";
+
+export const dynamic = "force-dynamic";
 
 async function Dashboard() {
   const stats = await getUserStats();
@@ -69,11 +72,15 @@ async function Dashboard() {
           <div className="dashboard__section-header">
             <h2 className="dashboard__score-title">SCORE BREAKDOWN</h2>
           </div>
-          <ScoreBreakdown />
+          <Suspense fallback={<div>Loading breakdown...</div>}>
+            <ScoreBreakdown />
+          </Suspense>
           <div className="dashboard__section-header">
             <h2 className="dashboard__genre-title">TOP GENRES</h2>
           </div>
-          <TopGenres />
+          <Suspense fallback={<div>Loading genres...</div>}>
+            <TopGenres />
+          </Suspense>
         </section>
       </div>
       <section className="dashboard__currently-playing">
@@ -98,13 +105,17 @@ async function Dashboard() {
             </svg>
           </Link>
         </div>
-        <CurrentlyPlaying />
+        <Suspense fallback={<div>Loading current games...</div>}>
+          <CurrentlyPlaying />
+        </Suspense>
       </section>
       <section className="dashboard__statuses">
         <div className="dashboard__section-header">
           <h2 className="dashboard__statuses-title">COLLECTION BY STATUS</h2>
         </div>
-        <Statuses stats={stats} />
+        <Suspense fallback={<div>Loading statuses...</div>}>
+          <Statuses stats={stats} />
+        </Suspense>
       </section>
     </main>
   );

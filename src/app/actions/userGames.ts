@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "../lib/prisma";
-import { GameStatus } from "@/generated/prisma";
+import { GameStatus } from "@prisma/client";
 import { CollectionGame } from "../components/collection-game-card/CollectionGameCard";
 import { getSessionUser } from "./auth";
 

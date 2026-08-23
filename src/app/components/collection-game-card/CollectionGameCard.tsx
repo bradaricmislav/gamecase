@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GameStatus } from "@/generated/prisma";
+import { GameStatus } from "@prisma/client";
 import "./CollectionGameCard.scss";
 
 export interface CollectionGame {

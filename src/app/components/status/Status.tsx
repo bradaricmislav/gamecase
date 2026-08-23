@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { upsertUserGame } from "@/app/actions/userGames";
 import { getCurrentUser } from "@/app/actions/auth";
-import { GameStatus } from "@/generated/prisma";
+import { GameStatus } from "@prisma/client";
 import "./Status.scss";
 
 const STATUS_OPTIONS: {

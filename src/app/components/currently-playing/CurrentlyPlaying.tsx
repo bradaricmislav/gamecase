@@ -27,8 +27,7 @@ async function CurrentlyPlaying() {
       const details = await getGameDetails(String(userGame.apiGameId));
       return {
         ...userGame,
-        backdropUrl:
-          details?.backdropUrl || userGame.backdropUrl || userGame.coverUrl,
+        backdropUrl: details?.backdropUrl || userGame.coverUrl,
       };
     }),
   );

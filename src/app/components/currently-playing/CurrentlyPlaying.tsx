@@ -6,10 +6,11 @@ import "./CurrentlyPlaying.scss";
 
 async function CurrentlyPlaying() {
   const collection = await getUserCollection();
-  const playingGames = collection
-    .filter((g) => g.status === "PLAYING")
+
+  const playingGames = (collection || [])
+    .filter((g: any) => g.status === "PLAYING")
     .sort(
-      (a, b) =>
+      (a: any, b: any) =>
         new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
     )
     .slice(0, 4);
@@ -23,7 +24,7 @@ async function CurrentlyPlaying() {
   }
 
   const gamesWithDetails = await Promise.all(
-    playingGames.map(async (userGame) => {
+    playingGames.map(async (userGame: any) => {
       const details = await getGameDetails(String(userGame.apiGameId));
       return {
         ...userGame,
@@ -31,7 +32,6 @@ async function CurrentlyPlaying() {
       };
     }),
   );
-
   const itemCount = gamesWithDetails.length;
 
   return (

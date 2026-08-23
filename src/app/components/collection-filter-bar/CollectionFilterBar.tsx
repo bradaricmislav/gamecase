@@ -1,6 +1,6 @@
 "use client";
 
-import { GameStatus } from "@/generated/prisma/enums";
+import { GameStatus } from "@/generated/prisma";
 import "./CollectionFilterBar.scss";
 
 interface FilterBarProps {

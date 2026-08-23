@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { GameStatus } from "@/generated/prisma/enums";
+import { GameStatus } from "@/generated/prisma";
 import { upsertUserGame } from "@/app/actions/userGames";
 import { getCurrentUser } from "@/app/actions/auth";
 import "./AddButton.scss";

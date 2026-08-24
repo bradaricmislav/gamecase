@@ -56,22 +56,7 @@ export async function registerUser(formData: RegisterFormData) {
       },
     });
 
-    const token = await new SignJWT({
-      userId: newUser.id,
-      email: newUser.email,
-    })
-      .setProtectedHeader({ alg: "HS256" })
-      .setExpirationTime("7d")
-      .sign(JWT_SECRET);
-
-    const cookieStore = await cookies();
-    cookieStore.set("auth_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7,
-      path: "/",
-    });
+    await createAuthSession(newUser.id, newUser.email);
 
     return { success: true };
   } catch (error) {
@@ -103,19 +88,7 @@ export async function loginUser(formData: LoginFormData) {
       return { success: false, error: "Invalid email or password." };
     }
 
-    const token = await new SignJWT({ userId: user.id, email: user.email })
-      .setProtectedHeader({ alg: "HS256" })
-      .setExpirationTime("7d")
-      .sign(JWT_SECRET);
-
-    const cookieStore = await cookies();
-    cookieStore.set("auth_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7,
-      path: "/",
-    });
+    await createAuthSession(user.id, user.email);
 
     return { success: true };
   } catch (error) {
@@ -173,4 +146,20 @@ export async function getCurrentUser() {
   } catch (error) {
     return null;
   }
+}
+
+async function createAuthSession(userId: string, email: string) {
+  const token = await new SignJWT({ userId, email })
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("7d")
+    .sign(JWT_SECRET);
+
+  const cookieStore = await cookies();
+  cookieStore.set("auth_token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 60 * 60 * 24 * 7,
+    path: "/",
+  });
 }

@@ -171,12 +171,12 @@ export async function getUserStats() {
     });
     const totalCount = games.length;
     const ratedGames = games.filter(
-      (game: any) => game.rating !== null && game.rating > 0,
+      (game) => game.rating !== null && game.rating > 0,
     );
     const ratedGamesCount = ratedGames.length;
 
     const sumRating = ratedGames.reduce(
-      (total: any, game: any) => total + (game.rating ?? 0),
+      (total, game) => total + (game.rating ?? 0),
       0,
     );
     const avgRating =
@@ -185,29 +185,27 @@ export async function getUserStats() {
         : 0;
 
     const playingCount = games.filter(
-      (game: any) => game.status === GameStatus.PLAYING,
+      (game) => game.status === GameStatus.PLAYING,
     ).length;
     const completedCount = games.filter(
-      (game: any) => game.status === GameStatus.COMPLETED,
+      (game) => game.status === GameStatus.COMPLETED,
     ).length;
     const wishlistCount = games.filter(
-      (game: any) => game.status === GameStatus.WISHLIST,
+      (game) => game.status === GameStatus.WISHLIST,
     ).length;
     const droppedCount = games.filter(
-      (game: any) => game.status === GameStatus.DROPPED,
+      (game) => game.status === GameStatus.DROPPED,
     ).length;
 
     const totalHours = games.reduce(
-      (total: any, game: any) => total + game.hoursPlayed,
+      (total, game) => total + game.hoursPlayed,
       0,
     );
 
-    const favoritesCount = games.filter(
-      (game: any) => game.rating === 10,
-    ).length;
+    const favoritesCount = games.filter((game) => game.rating === 10).length;
 
     const disappointmentsCount = games.filter(
-      (game: any) => game.rating !== null && game.rating < 5,
+      (game) => game.rating !== null && game.rating < 5,
     ).length;
 
     return {

@@ -1,5 +1,7 @@
 "use server";
 
+import { getUserCollection } from "./userGames";
+
 export type GameSearchResult = {
   id: number;
   title: string;
@@ -8,6 +10,23 @@ export type GameSearchResult = {
   genres: string[];
   releaseYear: number | null;
   platforms: string[];
+};
+
+type IGDBGame = {
+  id: number;
+  name?: string;
+  cover?: { url: string };
+  first_release_date?: number;
+  genres?: { name: string }[];
+  platforms?: { name: string }[];
+  summary?: string;
+  storyline?: string;
+  rating?: number;
+  screenshots?: { url: string }[];
+  involved_companies?: {
+    developer: boolean;
+    company?: { name: string };
+  }[];
 };
 
 async function getTwitchAccessToken(): Promise<string | null> {
@@ -78,15 +97,15 @@ export async function searchGames(
       return [];
     }
 
-    const games = await res.json();
+    const games: IGDBGame[] = await res.json();
 
-    let mappedGames = games.map((game: any) => {
+    let mappedGames: GameSearchResult[] = games.map((game) => {
       let coverUrl: string | null = null;
       if (game.cover?.url) {
         coverUrl = `https:${game.cover.url.replace("t_thumb", "t_cover_big")}`;
       }
 
-      const devCompany = game.involved_companies?.find((c: any) => c.developer);
+      const devCompany = game.involved_companies?.find((c) => c.developer);
       const developerName = devCompany?.company?.name || null;
 
       const parsedYear = game.first_release_date
@@ -94,16 +113,19 @@ export async function searchGames(
         : null;
 
       const parsedGenres =
-        game.genres?.map((g: any) => g.name).filter(Boolean) || [];
+        game.genres
+          ?.map((g) => g.name)
+          .filter((name): name is string => Boolean(name)) || [];
 
       const parsedPlatforms =
-        game.platforms?.map((p: any) => p.name).filter(Boolean) || [];
+        game.platforms
+          ?.map((p) => p.name)
+          .filter((name): name is string => Boolean(name)) || [];
 
       return {
         id: game.id,
         title: game.name || "Unknown title",
         coverUrl,
-
         developer: developerName,
         genres: parsedGenres,
         releaseYear: parsedYear,
@@ -113,22 +135,20 @@ export async function searchGames(
 
     if (genre) {
       const cleanGenre = genre.replace(/-/g, " ").toLowerCase();
-      mappedGames = mappedGames.filter((game: any) =>
-        game.genres.some((g: string) => g.toLowerCase().includes(cleanGenre)),
+      mappedGames = mappedGames.filter((game) =>
+        game.genres.some((g) => g.toLowerCase().includes(cleanGenre)),
       );
     }
 
     if (platform) {
       const cleanPlatform = platform.toLowerCase();
-      mappedGames = mappedGames.filter((game: any) =>
-        game.platforms.some((p: string) =>
-          p.toLowerCase().includes(cleanPlatform),
-        ),
+      mappedGames = mappedGames.filter((game) =>
+        game.platforms.some((p) => p.toLowerCase().includes(cleanPlatform)),
       );
     }
 
     if (sort) {
-      mappedGames.sort((a: any, b: any) => {
+      mappedGames.sort((a, b) => {
         const yearA = a.releaseYear || 0;
         const yearB = b.releaseYear || 0;
         return sort === "asc" ? yearA - yearB : yearB - yearA;
@@ -141,8 +161,6 @@ export async function searchGames(
     return [];
   }
 }
-
-import { getUserCollection } from "./userGames";
 
 export async function getGameDetails(id: string) {
   const token = await getTwitchAccessToken();
@@ -170,11 +188,12 @@ export async function getGameDetails(id: string) {
 
     if (!res.ok) return null;
 
-    const [game] = await res.json();
+    const games: IGDBGame[] = await res.json();
+    const game = games[0];
     if (!game) return null;
 
     const userGame = userCollection.find(
-      (ug: any) => String(ug.apiGameId) === String(id),
+      (ug) => String(ug.apiGameId) === String(id),
     );
 
     const coverUrl = game.cover?.url
@@ -185,11 +204,11 @@ export async function getGameDetails(id: string) {
       ? `https:${game.screenshots[0].url.replace("t_thumb", "t_1080p")}`
       : null;
 
-    const devCompany = game.involved_companies?.find((c: any) => c.developer);
+    const devCompany = game.involved_companies?.find((c) => c.developer);
 
     return {
       id: game.id,
-      title: game.name,
+      title: game.name || "Unknown title",
       coverUrl,
       backdropUrl,
       developer: devCompany?.company?.name || "Unknown developer",
@@ -198,8 +217,14 @@ export async function getGameDetails(id: string) {
         : null,
       rating: userGame?.rating ?? null,
       igdbRating: game.rating ? Math.round(game.rating / 10) : null,
-      genres: game.genres?.map((g: any) => g.name) || [],
-      platforms: game.platforms?.map((p: any) => p.name) || [],
+      genres:
+        game.genres
+          ?.map((g) => g.name)
+          .filter((name): name is string => Boolean(name)) || [],
+      platforms:
+        game.platforms
+          ?.map((p) => p.name)
+          .filter((name): name is string => Boolean(name)) || [],
       summary:
         game.summary ||
         game.storyline ||

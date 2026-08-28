@@ -25,19 +25,10 @@ export default function RootLayout({
       </head>
       <body>
         <div className="app-grid">
-          <aside className="sidebar-area">
-            <Sidebar />
-          </aside>
-
-          <header className="header-area">
-            <Header />
-          </header>
-
+          <Sidebar />
+          <Header />
           <main className="main-area">{children}</main>
-
-          <footer className="footer-area">
-            <Footer />
-          </footer>
+          <Footer />
         </div>
       </body>
     </html>

@@ -17,6 +17,20 @@ function RegisterForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (password.length < 8) {
+      setError("The password must be at least 8 characters long!");
+      return;
+    }
+    if (!/[A-Z]/.test(password)) {
+      setError("The password must contain at least one uppercase letter!");
+      return;
+    }
+    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+      setError("The password must contain at least one special character!");
+      return;
+    }
+
     setError("");
 
     if (password !== confirmPassword) {

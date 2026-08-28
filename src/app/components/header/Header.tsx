@@ -63,7 +63,7 @@ export default function Header() {
   };
 
   return (
-    <header className="header">
+    <header className="header header-area">
       <h1 className="header__title">{pageTitle}</h1>
       <div className="header-actions">
         <button

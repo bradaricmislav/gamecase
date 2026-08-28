@@ -9,7 +9,7 @@ export default async function Sidebar() {
   const username = await getCurrentUser();
 
   return (
-    <aside className="sidebar">
+    <aside className="sidebar sidebar-area">
       <div className="sidebar-top">
         <div className="sidebar-logo">
           <img

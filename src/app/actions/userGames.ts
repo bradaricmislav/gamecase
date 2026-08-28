@@ -64,7 +64,7 @@ export async function upsertUserGame(input: UpsertGameInput) {
     });
 
     revalidatePath(`/game/${input.apiGameId}`);
-    revalidatePath("/library");
+    revalidatePath("/mycollection");
 
     return { success: true, data: userGame };
   } catch (error) {
@@ -132,7 +132,7 @@ export async function removeUserGame(apiGameId: number) {
     });
 
     revalidatePath(`/game/${apiGameId}`);
-    revalidatePath("/library");
+    revalidatePath("/mycollection");
 
     return { success: true };
   } catch (error) {
@@ -256,26 +256,6 @@ export async function getTopRatedGames(limit = 6): Promise<CollectionGame[]> {
     return topGames;
   } catch (error) {
     console.error("Error while fetching top rated games.", error);
-    return [];
-  }
-}
-
-export async function getFavoriteGames() {
-  try {
-    const session = await getSessionUser();
-    if (!session) return [];
-
-    const collection = await prisma.userGame.findMany({
-      where: {
-        userId: session.userId,
-        rating: 10,
-      },
-      orderBy: { updatedAt: "desc" },
-    });
-
-    return collection;
-  } catch (error) {
-    console.error("Error while fetching favorite games:", error);
     return [];
   }
 }

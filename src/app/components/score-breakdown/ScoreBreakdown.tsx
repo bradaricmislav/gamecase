@@ -8,11 +8,16 @@ const ratingColor = (rating: number) => {
   return "#FF4444";
 };
 
+interface UserGame {
+  id: string;
+  rating: number | null;
+}
+
 async function ScoreBreakdown() {
   const games = await getUserCollection();
 
   const gamesPerRating = (rating: number) => {
-    return games.filter((game: any) => game.rating === rating).length;
+    return games.filter((game: UserGame) => game.rating === rating).length;
   };
 
   return (

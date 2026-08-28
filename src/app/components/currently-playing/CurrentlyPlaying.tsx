@@ -1,16 +1,38 @@
 import { getUserCollection } from "@/app/actions/userGames";
 import { getGameDetails } from "@/app/actions/igdb";
 import { getRatingColor } from "../collection-game-card/CollectionGameCard";
+import { GameStatus } from "@prisma/client";
 import Link from "next/link";
 import "./CurrentlyPlaying.scss";
 
-async function CurrentlyPlaying() {
-  const collection = await getUserCollection();
+interface UserGame {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string;
+  apiGameId: number;
+  title: string;
+  coverUrl: string | null;
+  developer: string | null;
+  genre: string | null;
+  releaseYear: number | null;
+  status: GameStatus;
+  rating: number | null;
+  hoursPlayed: number;
+  review: string;
+}
 
-  const playingGames = (collection || [])
-    .filter((g: any) => g.status === "PLAYING")
+interface GameWithDetails extends UserGame {
+  backdropUrl?: string | null;
+}
+
+async function CurrentlyPlaying() {
+  const collection: UserGame[] = (await getUserCollection()) || [];
+
+  const playingGames = collection
+    .filter((g) => g.status === "PLAYING")
     .sort(
-      (a: any, b: any) =>
+      (a, b) =>
         new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
     )
     .slice(0, 4);
@@ -23,8 +45,8 @@ async function CurrentlyPlaying() {
     );
   }
 
-  const gamesWithDetails = await Promise.all(
-    playingGames.map(async (userGame: any) => {
+  const gamesWithDetails: GameWithDetails[] = await Promise.all(
+    playingGames.map(async (userGame) => {
       const details = await getGameDetails(String(userGame.apiGameId));
       return {
         ...userGame,
@@ -32,6 +54,7 @@ async function CurrentlyPlaying() {
       };
     }),
   );
+
   const itemCount = gamesWithDetails.length;
 
   return (

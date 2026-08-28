@@ -7,6 +7,22 @@ import DateFilter from "../components/date-filter/DateFilter";
 import AddButton from "../components/add-button/AddButton";
 import "./Browse.scss";
 import Link from "next/link";
+import { GameStatus } from "@prisma/client";
+
+interface CatalogGame {
+  id: number;
+  title: string;
+  coverUrl?: string | null;
+  developer?: string | null;
+  genres?: string[];
+  platforms?: string[];
+  releaseYear?: number | null;
+}
+
+interface UserCollectionItem {
+  apiGameId: number;
+  status: GameStatus;
+}
 
 interface BrowsePageProps {
   searchParams: Promise<{
@@ -19,17 +35,17 @@ interface BrowsePageProps {
 
 export default async function BrowsePage({ searchParams }: BrowsePageProps) {
   const { query, genre, platform, sort } = await searchParams;
-
   const hasActiveFilters = Boolean(query || genre || platform || sort);
 
   const [games, userCollection] = await Promise.all([
-    searchGames(query || "", genre, platform, sort),
-    getUserCollection() as Promise<any[]>,
+    searchGames(query || "", genre, platform, sort) as Promise<CatalogGame[]>,
+    getUserCollection() as Promise<UserCollectionItem[]>,
   ]);
 
-  const userGamesMap = new Map<any, any>(
-    (userCollection || []).map((ug: any) => [ug.apiGameId, ug]),
+  const userGamesMap = new Map<number, UserCollectionItem>(
+    (userCollection || []).map((ug) => [ug.apiGameId, ug]),
   );
+
   return (
     <div className="browse-container">
       <h1>BROWSE GAMES</h1>
@@ -50,7 +66,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
       )}
 
       <ul className="games-list">
-        {games.map((game: any) => {
+        {games.map((game) => {
           const userGame = userGamesMap.get(game.id);
 
           return (
@@ -74,18 +90,16 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
                       {game.releaseYear && <li>{game.releaseYear}</li>}
                     </ul>
                     <ul className="games-list__game-platforms">
-                      {game.platforms?.map(
-                        (platform: string, index: number) => (
-                          <li key={index}>{platform}</li>
-                        ),
-                      )}
+                      {game.platforms?.map((platform, index) => (
+                        <li key={index}>{platform}</li>
+                      ))}
                     </ul>
                   </div>
                 </div>
 
                 <div className="games-list__actions">
                   <ul className="games-list__game-genres">
-                    {game.genres?.map((genre: string, index: number) => (
+                    {game.genres?.map((genre, index) => (
                       <li key={index}>{genre}</li>
                     ))}
                   </ul>

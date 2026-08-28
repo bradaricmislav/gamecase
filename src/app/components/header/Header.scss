@@ -1,3 +1,5 @@
+@use "../../styles/breakpoints.scss" as *;
+
 $text-muted: #8b949e;
 
 .header {
@@ -95,5 +97,10 @@ $text-muted: #8b949e;
       text-decoration: none;
       color: var(--sign-out-btn-text-color);
     }
+  }
+
+  @include respond-down("sm") {
+    width: 100%;
+    gap: 10px;
   }
 }

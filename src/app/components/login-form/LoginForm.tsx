@@ -16,6 +16,7 @@ function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
     setLoading(true);
 
     try {
@@ -121,18 +122,6 @@ function LoginForm() {
                 </svg>
               </button>
             </div>
-          </div>
-
-          <div className="auth-card__options">
-            <label className="auth-card__checkbox-label">
-              <input
-                type="checkbox"
-                className="auth-card__checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-              />
-              <span>Remember me</span>
-            </label>
           </div>
 
           <button

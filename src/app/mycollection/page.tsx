@@ -11,10 +11,10 @@ export default async function MyCollection() {
   return (
     <main className="collection-page">
       <header className="collection-page__header">
-        <h1>My Collection</h1>
+        <h1>Moja kolekcija</h1>
       </header>
 
-      <Suspense fallback={<div>Loading collection...</div>}>
+      <Suspense fallback={<div>Učitavanje kolekcije...</div>}>
         <MyCollectionClient initialGames={userGames} />
       </Suspense>
     </main>

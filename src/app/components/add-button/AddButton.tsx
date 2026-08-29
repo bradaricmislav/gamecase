@@ -78,7 +78,7 @@ export default function AddButton({
         disabled={loading}
         onClick={handleOpen}
       >
-        + ADD
+        + DODAJ
       </button>
     );
   }
@@ -104,25 +104,25 @@ export default function AddButton({
         className={`status-btn status-btn--playing ${status === GameStatus.PLAYING ? "active" : ""}`}
         onClick={() => handleStatusChange(GameStatus.PLAYING)}
       >
-        PLAYING
+        IGRAM
       </button>
       <button
         className={`status-btn status-btn--completed ${status === GameStatus.COMPLETED ? "active" : ""}`}
         onClick={() => handleStatusChange(GameStatus.COMPLETED)}
       >
-        COMPLETED
+        ZAVRŠENO
       </button>
       <button
         className={`status-btn status-btn--wishlist ${status === GameStatus.WISHLIST ? "active" : ""}`}
         onClick={() => handleStatusChange(GameStatus.WISHLIST)}
       >
-        WISHLIST
+        LISTA ŽELJA
       </button>
       <button
         className={`status-btn status-btn--dropped ${status === GameStatus.DROPPED ? "active" : ""}`}
         onClick={() => handleStatusChange(GameStatus.DROPPED)}
       >
-        DROPPED
+        ODBAČENO
       </button>
       <button className="status-btn status-btn--remove" onClick={handleClose}>
         ✕

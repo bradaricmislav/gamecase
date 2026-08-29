@@ -15,7 +15,7 @@ export default async function Sidebar() {
           <img
             className="sidebar__logo"
             src="/icons/gamepad_icon.svg"
-            alt="Gamepad Icon"
+            alt="Ikona upravljača"
           />
           GAMECASE
         </div>
@@ -28,7 +28,9 @@ export default async function Sidebar() {
           <div className="avatar">{getInitials(username ?? "")}</div>
           <div className="user-details">
             <span className="user-name">{username}</span>
-            <span className="user-stats">{stats.totalCount} games tracked</span>
+            <span className="user-stats">
+              {stats.totalCount} praćenih igara
+            </span>
           </div>
         </div>
       ) : null}

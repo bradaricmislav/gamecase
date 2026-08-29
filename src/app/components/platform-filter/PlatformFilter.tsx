@@ -31,7 +31,7 @@ export default function PlatformFilter() {
       value={currentPlatform}
       onChange={handleChange}
     >
-      <option value="">All Platforms</option>
+      <option value="">Sve platforme</option>
       <option value="pc">PC</option>
       <option value="ps5">PS5</option>
       <option value="ps4">PS4</option>

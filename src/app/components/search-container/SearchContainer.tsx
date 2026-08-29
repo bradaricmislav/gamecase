@@ -41,7 +41,7 @@ export default function SearchBar() {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search games..."
+          placeholder="Pretraži igre..."
           onFocus={() => query.length >= 2 && setIsOpen(true)}
         />
         <button type="submit">🔍</button>

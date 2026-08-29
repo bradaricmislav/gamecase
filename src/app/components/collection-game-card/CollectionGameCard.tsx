@@ -33,6 +33,13 @@ const getStatusColor = (status: string) => {
   return "#F43F5E";
 };
 
+const translateStatus = (status: string) => {
+  if (status === "COMPLETED") return "ZAVRŠENO";
+  if (status === "PLAYING") return "TRENUTNO IGRAM";
+  if (status === "WISHLIST") return "LISTA ŽELJA";
+  return "NAPUŠTENO";
+};
+
 function CollectionGameCard({ game }: CollectionGameCardProps) {
   return (
     <li className="game-card">
@@ -72,7 +79,7 @@ function CollectionGameCard({ game }: CollectionGameCardProps) {
             }}
             className="game-card__game-status"
           >
-            {game.status}
+            {translateStatus(game.status)}
           </span>
         </div>
       </Link>

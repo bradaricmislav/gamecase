@@ -8,12 +8,12 @@ import "./Header.scss";
 import Link from "next/link";
 
 const getPageTitle = (pathname: string): string => {
-  if (pathname === "/dashboard") return "Dashboard";
-  if (pathname === "/mycollection") return "Collection";
-  if (pathname === "/browse") return "Browse";
+  if (pathname === "/dashboard") return "Nadzorna ploča";
+  if (pathname === "/mycollection") return "Kolekcija";
+  if (pathname === "/browse") return "Pretraži";
 
-  if (pathname.startsWith("/games/")) return "Game Details";
-  if (pathname.startsWith("/games")) return "Browse Games";
+  if (pathname.startsWith("/games/")) return "Detalji igre";
+  if (pathname.startsWith("/games")) return "Pretraži igre";
 
   return "";
 };
@@ -57,7 +57,7 @@ export default function Header() {
       await logoutUser();
       window.location.href = "/auth/login";
     } catch (error) {
-      console.error("Failed to sign out:", error);
+      console.error("Neuspješna odjava:", error);
       setLoading(false);
     }
   };
@@ -69,7 +69,7 @@ export default function Header() {
         <button
           onClick={toggleTheme}
           className="theme-toggle"
-          title="Change theme"
+          title="Promijeni temu"
         >
           <img
             src={
@@ -77,7 +77,7 @@ export default function Header() {
                 ? "/icons/dark-mode_icon.svg"
                 : "/icons/light-mode_icon.svg"
             }
-            alt="Theme Mode Icon"
+            alt="Ikona načina teme"
           />
         </button>
         {username ? (
@@ -94,13 +94,13 @@ export default function Header() {
               onClick={handleLogout}
               disabled={loading}
             >
-              {loading ? "SIGNING OUT..." : "SIGN OUT"}
+              {loading ? "ODJAVA..." : "ODJAVI SE"}
             </button>
           </>
         ) : (
           <button className="login-btn">
             <Link className="login-link" href="/auth/login">
-              LOG IN
+              PRIJAVI SE
             </Link>
           </button>
         )}

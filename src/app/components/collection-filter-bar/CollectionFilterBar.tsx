@@ -23,23 +23,23 @@ interface FilterBarProps {
 }
 
 const STATUS_TABS = [
-  { id: "ALL", label: "ALL", colorClass: "" },
-  { id: GameStatus.PLAYING, label: "PLAYING", colorClass: "playing" },
-  { id: GameStatus.COMPLETED, label: "COMPLETED", colorClass: "completed" },
-  { id: GameStatus.WISHLIST, label: "WISHLIST", colorClass: "wishlist" },
-  { id: GameStatus.DROPPED, label: "DROPPED", colorClass: "dropped" },
+  { id: "ALL", label: "SVE", colorClass: "" },
+  { id: GameStatus.PLAYING, label: "TRENUTNO IGRAM", colorClass: "playing" },
+  { id: GameStatus.COMPLETED, label: "ZAVRŠENO", colorClass: "completed" },
+  { id: GameStatus.WISHLIST, label: "LISTA ŽELJA", colorClass: "wishlist" },
+  { id: GameStatus.DROPPED, label: "NAPUŠTENO", colorClass: "dropped" },
 ];
 
 const SPECIAL_LIST_TABS = [
   {
     id: "favorites",
-    label: "FAVORITES",
+    label: "OMILJENO",
     icon: "/icons/star_icon.svg",
     countKey: "FAVORITES",
   },
   {
     id: "disappointments",
-    label: "DISAPPOINTMENTS",
+    label: "RAZOČARANJA",
     icon: "/icons/heart-broken_icon.svg",
     countKey: "DISAPPOINTMENTS",
   },
@@ -110,7 +110,7 @@ export default function CollectionFilterBar({
           </span>
           <input
             type="text"
-            placeholder="Search..."
+            placeholder="Pretraži..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
           />
@@ -121,10 +121,10 @@ export default function CollectionFilterBar({
           onChange={(e) => onSortChange(e.target.value)}
           className="filter-bar__sort-select"
         >
-          <option value="score_desc">Score: High → Low</option>
-          <option value="score_asc">Score: Low → High</option>
-          <option value="title_asc">Title: A → Z</option>
-          <option value="updated_desc">Recently Updated</option>
+          <option value="score_desc">Ocjena: Veća → Manja</option>
+          <option value="score_asc">Ocjena: Manja → Veća</option>
+          <option value="title_asc">Naslov: A → Z</option>
+          <option value="updated_desc">Nedavno Ažurirano</option>
         </select>
       </div>
     </div>

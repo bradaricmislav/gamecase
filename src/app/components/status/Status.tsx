@@ -15,25 +15,25 @@ const STATUS_OPTIONS: {
 }[] = [
   {
     id: GameStatus.PLAYING,
-    label: "PLAYING",
+    label: "TRENUTNO IGRAM",
     color: "#f59e0b",
     bg_color: "#F59E0B1F",
   },
   {
     id: GameStatus.COMPLETED,
-    label: "COMPLETED",
+    label: "ZAVRŠENO",
     color: "#22C55E",
     bg_color: "#22C55E1F",
   },
   {
     id: GameStatus.WISHLIST,
-    label: "WISHLIST",
+    label: "LISTA ŽELJA",
     color: "#38bdf8",
     bg_color: "#38BDF81F",
   },
   {
     id: GameStatus.DROPPED,
-    label: "DROPPED",
+    label: "NAPUŠTENO",
     color: "#F43F5E",
     bg_color: "#F43F5E1F",
   },
@@ -73,15 +73,13 @@ export default function StatusSelect({
 
   const saveStatusToDb = async (status: GameStatus | null) => {
     if (!game || !game.id) {
-      console.warn(
-        "The game object was not passed to the StatusSelect component!",
-      );
+      console.warn("Objekt igre nije proslijeđen u StatusSelect komponentu!");
       return;
     }
 
     await upsertUserGame({
       apiGameId: game.id,
-      title: game.title ?? "Unknown Game",
+      title: game.title ?? "Nepoznata igra",
       coverUrl: game.coverUrl,
       developer: game.developer,
       genre: game.genres?.[0] ?? null,
@@ -103,7 +101,7 @@ export default function StatusSelect({
 
   return (
     <div className="status-box">
-      <h2 className="status-box__title">YOUR STATUS</h2>
+      <h2 className="status-box__title">TVOJ STATUS</h2>
 
       <ul className="status-box__list">
         {STATUS_OPTIONS.map((st) => {

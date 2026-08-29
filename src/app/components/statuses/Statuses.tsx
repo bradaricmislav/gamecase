@@ -28,7 +28,7 @@ async function Statuses({ stats }: { stats: StatsOverviewData }) {
               className="dot"
               style={{ backgroundColor: getStatusColor("PLAYING") }}
             />
-            PLAYING
+            TRENUTNO IGRAM
           </div>
           {stats.playingCount}
         </Link>
@@ -43,7 +43,7 @@ async function Statuses({ stats }: { stats: StatsOverviewData }) {
               className="dot"
               style={{ backgroundColor: getStatusColor("COMPLETED") }}
             />
-            COMPLETED
+            ZAVRŠENO
           </div>
           {stats.completedCount}
         </Link>
@@ -58,7 +58,7 @@ async function Statuses({ stats }: { stats: StatsOverviewData }) {
               className="dot"
               style={{ backgroundColor: getStatusColor("WISHLIST") }}
             />
-            WISHLIST
+            LISTA ŽELJA
           </div>
           {stats.wishlistCount}
         </Link>
@@ -73,7 +73,7 @@ async function Statuses({ stats }: { stats: StatsOverviewData }) {
               className="dot"
               style={{ backgroundColor: getStatusColor("DROPPED") }}
             />
-            DROPPED
+            NAPUŠTENO
           </div>
           {stats.droppedCount}
         </Link>

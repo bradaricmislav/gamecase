@@ -40,7 +40,7 @@ async function CurrentlyPlaying() {
   if (playingGames.length === 0) {
     return (
       <div className="empty">
-        <p>You are not currently playing any game.</p>
+        <p>Trenutno ne igrate nijednu videoigru.</p>
       </div>
     );
   }
@@ -82,7 +82,7 @@ async function CurrentlyPlaying() {
 
               <div className="info">
                 <div className="status-label">
-                  <span className="dot">•</span> NOW PLAYING
+                  <span className="dot">•</span> IGRAM
                 </div>
                 <h3 className="title">{game.title}</h3>
                 <p className="meta">

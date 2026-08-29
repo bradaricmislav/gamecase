@@ -19,22 +19,22 @@ function RegisterForm() {
     e.preventDefault();
 
     if (password.length < 8) {
-      setError("The password must be at least 8 characters long!");
+      setError("Lozinka mora imati najmanje 8 znakova!");
       return;
     }
     if (!/[A-Z]/.test(password)) {
-      setError("The password must contain at least one uppercase letter!");
+      setError("Lozinka mora sadržavati barem jedno veliko slovo!");
       return;
     }
     if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-      setError("The password must contain at least one special character!");
+      setError("Lozinka mora sadržavati barem jedan poseban znak!");
       return;
     }
 
     setError("");
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError("Lozinke se ne podudaraju");
       return;
     }
 
@@ -44,13 +44,13 @@ function RegisterForm() {
       const result = await registerUser({ username, email, password });
 
       if (!result.success) {
-        setError(result.error || "Registration failed");
+        setError(result.error || "Registracija nije uspjela");
         setLoading(false);
         return;
       }
       window.location.href = "/dashboard";
     } catch (err) {
-      setError("Something went wrong. Please try again.");
+      setError("Nešto je pošlo po zlu. Pokušajte ponovno.");
       setLoading(false);
     }
   };
@@ -74,21 +74,22 @@ function RegisterForm() {
         </div>
         <div className="auth-card__toggle">
           <Link href="/auth/login" className="auth-card__toggle-btn">
-            LOG IN
+            PRIJAVA
           </Link>
           <Link
             href="/auth/register"
             className="auth-card__toggle-btn auth-card__toggle-btn--active"
           >
-            REGISTER
+            REGISTRACIJA
           </Link>
         </div>
       </header>
 
       <div className="auth-card__content">
-        <h1 className="auth-card__title">CREATE ACCOUNT</h1>
+        <h1 className="auth-card__title">IZRADI RAČUN</h1>
         <p className="auth-card__subtitle">
-          Join Gamecase to track, rate, and review your collection.
+          Pridružite se Gamecaseu kako biste pratili, ocjenjivali i recenzirali
+          svoju kolekciju.
         </p>
 
         {error && <div className="auth-card__error-box">{error}</div>}
@@ -96,13 +97,13 @@ function RegisterForm() {
         <form className="auth-card__form" onSubmit={handleSubmit}>
           <div className="auth-card__field">
             <label className="auth-card__label" htmlFor="username">
-              Username
+              Korisničko ime
             </label>
             <input
               id="username"
               type="text"
               className="auth-card__input"
-              placeholder="Your username"
+              placeholder="Vaše korisničko ime"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -111,13 +112,13 @@ function RegisterForm() {
 
           <div className="auth-card__field">
             <label className="auth-card__label" htmlFor="email">
-              Email
+              E-pošta
             </label>
             <input
               id="email"
               type="email"
               className="auth-card__input"
-              placeholder="you@example.com"
+              placeholder="vasa@adresa.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -126,7 +127,7 @@ function RegisterForm() {
 
           <div className="auth-card__field">
             <label className="auth-card__label" htmlFor="password">
-              Password
+              Lozinka
             </label>
             <div className="auth-card__input-wrapper">
               <input
@@ -135,7 +136,7 @@ function RegisterForm() {
                 className={`auth-card__input ${
                   error ? "auth-card__input--error" : ""
                 }`}
-                placeholder="Create a password"
+                placeholder="Stvorite lozinku"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -161,7 +162,7 @@ function RegisterForm() {
 
           <div className="auth-card__field">
             <label className="auth-card__label" htmlFor="confirmPassword">
-              Confirm Password
+              Potvrdite lozinku
             </label>
             <div className="auth-card__input-wrapper">
               <input
@@ -170,7 +171,7 @@ function RegisterForm() {
                 className={`auth-card__input ${
                   error ? "auth-card__input--error" : ""
                 }`}
-                placeholder="Confirm your password"
+                placeholder="Potvrdite svoju lozinku"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -199,14 +200,14 @@ function RegisterForm() {
             className="auth-card__submit-btn"
             disabled={loading}
           >
-            {loading ? "REGISTERING..." : "REGISTER"}
+            {loading ? "REGISTRACIJA U TIJEKU..." : "REGISTRIRAJ SE"}
           </button>
         </form>
 
         <p className="auth-card__footer-text">
-          Already have an account?{" "}
+          Već imate račun?{" "}
           <Link href="/auth/login" className="auth-card__register-link">
-            Log in
+            Prijavite se
           </Link>
         </p>
 
@@ -222,7 +223,8 @@ function RegisterForm() {
             <path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T900-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
           </svg>
           <span className="auth-card__info-text">
-            <strong>Guests can browse</strong> but cannot rate or write reviews.
+            <strong>Gosti mogu pregledavati sadržaj</strong>, ali ne mogu
+            ocjenjivati niti pisati recenzije.
           </span>
         </div>
       </div>

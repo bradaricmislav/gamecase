@@ -29,9 +29,9 @@ export default function DateFilter() {
       value={currentSort}
       onChange={handleChange}
     >
-      <option value="">Release Date</option>
-      <option value="desc">Descending</option>
-      <option value="asc">Ascending</option>
+      <option value="">Datum izlaska</option>
+      <option value="desc">Padajući</option>
+      <option value="asc">Rastući</option>
     </select>
   );
 }

@@ -94,7 +94,7 @@ function RatingSelect({
 
   return (
     <div className="rating-box">
-      <span className="rating-box__title">RATE THIS GAME</span>
+      <span className="rating-box__title">OCIJENI IGRU</span>
 
       <div className="rating-grid" onMouseLeave={handleMouseLeave}>
         {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => {
@@ -121,7 +121,7 @@ function RatingSelect({
           className="rating-box__clear"
           onClick={handleClear}
         >
-          Clear rating
+          Obriši ocjenu
         </button>
       )}
     </div>

@@ -23,14 +23,14 @@ function LoginForm() {
       const result = await loginUser({ email, password });
 
       if (!result.success) {
-        setError(result.error || "Login failed");
+        setError(result.error || "Prijava nije uspjela");
         setLoading(false);
         return;
       }
 
       window.location.href = "/dashboard";
     } catch (err) {
-      setError("Something went wrong. Please try again.");
+      setError("Nešto je pošlo po zlu. Pokušajte ponovno.");
       setLoading(false);
     }
   };
@@ -57,18 +57,18 @@ function LoginForm() {
             href="/auth/login"
             className="auth-card__toggle-btn auth-card__toggle-btn--active"
           >
-            LOG IN
+            PRIJAVA
           </Link>
           <Link href="/auth/register" className="auth-card__toggle-btn">
-            REGISTER
+            REGISTRACIJA
           </Link>
         </div>
       </header>
 
       <div className="auth-card__content">
-        <h1 className="auth-card__title">WELCOME BACK</h1>
+        <h1 className="auth-card__title">DOBRODOŠLI NATRAG</h1>
         <p className="auth-card__subtitle">
-          Log in to rate, review, and track your games.
+          Prijavite se kako biste ocjenjivali, recenzirali i pratili svoje igre.
         </p>
 
         {error && <div className="auth-card__error-box">{error}</div>}
@@ -76,13 +76,13 @@ function LoginForm() {
         <form className="auth-card__form" onSubmit={handleSubmit}>
           <div className="auth-card__field">
             <label className="auth-card__label" htmlFor="email">
-              Email
+              E-pošta
             </label>
             <input
               id="email"
               type="email"
               className="auth-card__input"
-              placeholder="you@example.com"
+              placeholder="vasa@adresa.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -91,7 +91,7 @@ function LoginForm() {
 
           <div className="auth-card__field">
             <label className="auth-card__label" htmlFor="password">
-              Password
+              Lozinka
             </label>
             <div className="auth-card__input-wrapper">
               <input
@@ -100,7 +100,7 @@ function LoginForm() {
                 className={`auth-card__input ${
                   error ? "auth-card__input--error" : ""
                 }`}
-                placeholder="Your password"
+                placeholder="Vaša lozinka"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -129,14 +129,14 @@ function LoginForm() {
             className="auth-card__submit-btn"
             disabled={loading}
           >
-            {loading ? "LOGGING IN..." : "LOG IN"}
+            {loading ? "PRIJAVA U TIJEKU..." : "PRIJAVI SE"}
           </button>
         </form>
 
         <p className="auth-card__footer-text">
-          Don’t have an account?{" "}
+          Nemate račun?{" "}
           <Link href="/auth/register" className="auth-card__register-link">
-            Create one
+            Izradite ga
           </Link>
         </p>
 
@@ -152,7 +152,8 @@ function LoginForm() {
             <path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T900-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
           </svg>
           <span className="auth-card__info-text">
-            <strong>Guests can browse</strong> but cannot rate or write reviews.
+            <strong>Gosti mogu pregledavati sadržaj</strong>, ali ne mogu
+            ocjenjivati niti pisati recenzije.
           </span>
         </div>
       </div>

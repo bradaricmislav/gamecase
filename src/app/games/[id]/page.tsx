@@ -6,6 +6,7 @@ import RatingSelect from "@/app/components/rating-select/RatingSelect";
 import StatusSelect from "@/app/components/status/Status";
 import GameHeroActions from "@/app/components/game-hero-actions/GameHeroActions";
 import { getRatingColor } from "@/app/components/collection-game-card/CollectionGameCard";
+import { translateToCroatian } from "@/app/actions/translate";
 import "./GameDetails.scss";
 
 interface PageProps {
@@ -34,6 +35,8 @@ export default async function GameDetailPage({ params }: PageProps) {
     genres: game.genres,
     releaseYear: game.releaseYear,
   };
+
+  const croatianSummary = translateToCroatian(game.summary);
 
   return (
     <div className="game-page">
@@ -89,39 +92,39 @@ export default async function GameDetailPage({ params }: PageProps) {
         )}
 
         <section className="game-page__section">
-          <h2 className="game-page__section-title">DETAILS</h2>
+          <h2 className="game-page__section-title">DETALJI</h2>
           <dl className="game-page__grid">
             <div className="game-page__grid-item">
-              <dt className="game-page__grid-label">PLATFORM</dt>
+              <dt className="game-page__grid-label">PLATFORMA</dt>
               <dd className="game-page__grid-value">
                 {game.platforms?.join(", ")}
               </dd>
             </div>
 
             <div className="game-page__grid-item">
-              <dt className="game-page__grid-label">GENRE</dt>
+              <dt className="game-page__grid-label">ŽANR</dt>
               <dd className="game-page__grid-value">{game.genres?.[0]}</dd>
             </div>
 
             <div className="game-page__grid-item">
-              <dt className="game-page__grid-label">RELEASE YEAR</dt>
+              <dt className="game-page__grid-label">GODINA IZDAVANJA</dt>
               <dd className="game-page__grid-value">{game.releaseYear}</dd>
             </div>
 
             <div className="game-page__grid-item">
-              <dt className="game-page__grid-label">DEVELOPER</dt>
+              <dt className="game-page__grid-label">RAZVOJNI TIM</dt>
               <dd className="game-page__grid-value">{game.developer}</dd>
             </div>
 
             <div className="game-page__grid-item">
-              <dt className="game-page__grid-label">HOURS PLAYED</dt>
+              <dt className="game-page__grid-label">ODIGRANO SATI</dt>
               <dd className="game-page__grid-value">
                 {userGame?.hoursPlayed ? `${userGame.hoursPlayed}h` : "0h"}
               </dd>
             </div>
 
             <div className="game-page__grid-item">
-              <dt className="game-page__grid-label">SCORE</dt>
+              <dt className="game-page__grid-label">OCJENA</dt>
               <dd className="game-page__grid-value">
                 {userGame?.rating ? `${userGame.rating}/10` : "N/A"}
               </dd>
@@ -133,12 +136,12 @@ export default async function GameDetailPage({ params }: PageProps) {
 
         <div className="game-page__about-game">
           <section className="game-page__section">
-            <h2 className="game-page__section-title">ABOUT THE GAME</h2>
-            <p className="game-page__game-summary">{game.summary}</p>
+            <h2 className="game-page__section-title">O IGRI</h2>
+            <p className="game-page__game-summary">{croatianSummary}</p>
           </section>
 
           <section className="game-page__section">
-            <h2 className="game-page__section-title">GENRES</h2>
+            <h2 className="game-page__section-title">ŽANROVI</h2>
             <ul className="game-page__genres">
               {game.genres?.map((genre: string, index: number) => (
                 <li className="game-page__genre" key={index}>
@@ -151,7 +154,7 @@ export default async function GameDetailPage({ params }: PageProps) {
 
         {userGame?.review && (
           <section className="game-page__section">
-            <h2 className="game-page__section-title">MY REVIEW</h2>
+            <h2 className="game-page__section-title">MOJA RECENZIJA</h2>
             <div className="game-page__user-review">
               <p>{userGame.review}</p>
             </div>

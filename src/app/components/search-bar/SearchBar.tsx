@@ -57,7 +57,7 @@ export default function SearchBar() {
     <div className="search-bar-container" ref={containerRef}>
       <form className="search-form" onSubmit={handleSearch}>
         <button className="search-form__submit" type="submit">
-          <img src="/icons/search_icon.svg" alt="Search Icon" />
+          <img src="/icons/search_icon.svg" alt="Ikona pretraživanja" />
         </button>
         <input
           className="search-form__input"
@@ -65,7 +65,7 @@ export default function SearchBar() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => query.trim().length >= 2 && setIsOpen(true)}
-          placeholder="Search games, developers, tags..."
+          placeholder="Pretraži igre, razvijatelje, oznake..."
         />
       </form>
 

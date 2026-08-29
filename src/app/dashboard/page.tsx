@@ -20,14 +20,15 @@ async function Dashboard() {
   if (isEmpty) {
     return (
       <main className="dashboard">
-        <h1>Dashboard</h1>
+        <h1>Nadzorna ploča</h1>
         <div className="dashboard__empty">
-          <h2>Your collection is empty</h2>
+          <h2>Vaša kolekcija je prazna</h2>
           <p>
-            There are no games in your collection yet. Go to search to add them.
+            Još nema dodanih igara u vašoj kolekciji. Idite na pretraživanje
+            kako biste ih dodali.
           </p>
           <Link href="/browse" className="dashboard__empty-btn">
-            Search and add games
+            Pretraži i dodaj igre
           </Link>
         </div>
       </main>
@@ -36,14 +37,14 @@ async function Dashboard() {
 
   return (
     <main className="dashboard">
-      <h1>Dashboard</h1>
+      <h1>Nadzorna ploča</h1>
       <StatsOverview stats={stats} />
       <div className="dashboard__grid">
         <section className="dashboard__top-rated">
           <div className="dashboard__section-header">
-            <h2 className="dashboard__top-rated-title">TOP RATED</h2>
+            <h2 className="dashboard__top-rated-title">NAJBOLJE OCJENJENO</h2>
             <Link className="dashboard__top-rated-link" href="/mycollection">
-              View All{" "}
+              Prikaži sve{" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="16px"
@@ -65,32 +66,34 @@ async function Dashboard() {
               ))}
             </ul>
           ) : (
-            <p className="dashboard__empty-text">No rated games yet.</p>
+            <p className="dashboard__empty-text">Još nema ocjenjenih igara.</p>
           )}
         </section>
         <section className="dashboard__score-chart">
           <div className="dashboard__section-header">
-            <h2 className="dashboard__score-title">SCORE BREAKDOWN</h2>
+            <h2 className="dashboard__score-title">RASPODJELA OCJENA</h2>
           </div>
-          <Suspense fallback={<div>Loading breakdown...</div>}>
+          <Suspense fallback={<div>Učitavanje raspodjele...</div>}>
             <ScoreBreakdown />
           </Suspense>
           <div className="dashboard__section-header">
-            <h2 className="dashboard__genre-title">TOP GENRES</h2>
+            <h2 className="dashboard__genre-title">TOP ŽANROVI</h2>
           </div>
-          <Suspense fallback={<div>Loading genres...</div>}>
+          <Suspense fallback={<div>Učitavanje žanrova...</div>}>
             <TopGenres />
           </Suspense>
         </section>
       </div>
       <section className="dashboard__currently-playing">
         <div className="dashboard__section-header">
-          <h2 className="dashboard__currently-playing-title">NOW PLAYING</h2>
+          <h2 className="dashboard__currently-playing-title">
+            TRENUTNO SE IGRA
+          </h2>
           <Link
             className="dashboard__currently-playing-link"
             href="/mycollection?status=PLAYING"
           >
-            View All{" "}
+            Prikaži sve{" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="16px"
@@ -105,15 +108,15 @@ async function Dashboard() {
             </svg>
           </Link>
         </div>
-        <Suspense fallback={<div>Loading current games...</div>}>
+        <Suspense fallback={<div>Učitavanje trenutnih igara...</div>}>
           <CurrentlyPlaying />
         </Suspense>
       </section>
       <section className="dashboard__statuses">
         <div className="dashboard__section-header">
-          <h2 className="dashboard__statuses-title">COLLECTION BY STATUS</h2>
+          <h2 className="dashboard__statuses-title">KOLEKCIJA PO STATUSU</h2>
         </div>
-        <Suspense fallback={<div>Loading statuses...</div>}>
+        <Suspense fallback={<div>Učitavanje statusa...</div>}>
           <Statuses stats={stats} />
         </Suspense>
       </section>

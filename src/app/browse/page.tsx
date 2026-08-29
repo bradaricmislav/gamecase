@@ -48,7 +48,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
 
   return (
     <div className="browse-container">
-      <h1>BROWSE GAMES</h1>
+      <h1>PRETRAŽIVANJE IGARA</h1>
 
       <div className="browse-container__filters">
         <SearchBar />
@@ -58,11 +58,13 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
       </div>
 
       {!hasActiveFilters && (
-        <p>Enter a game name or select filters to view results.</p>
+        <p>Unesite naziv igre ili odaberite filtre za prikaz rezultata.</p>
       )}
 
       {hasActiveFilters && games.length === 0 && (
-        <p>No games found matching your search criteria.</p>
+        <p>
+          Nije pronađena nijedna igra koja odgovara vašim kriterijima pretrage.
+        </p>
       )}
 
       <ul className="games-list">

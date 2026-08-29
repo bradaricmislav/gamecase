@@ -74,9 +74,9 @@ function MyCollectionClient({ initialGames }: { initialGames: any[] }) {
   if (initialGames.length === 0) {
     return (
       <div className="collection-page__empty">
-        <p>Your collection is empty.</p>
+        <p>Vaša kolekcija je prazna.</p>
         <Link href="/browse" className="collection-page__explore-btn">
-          Search and add games
+          Pretraži i dodaj igre
         </Link>
       </div>
     );
@@ -97,7 +97,7 @@ function MyCollectionClient({ initialGames }: { initialGames: any[] }) {
 
       {filteredGames.length === 0 ? (
         <div className="collection-page__empty">
-          <p>No games found matching your filters.</p>
+          <p>Nema igara koje odgovaraju odabranim filtrima.</p>
         </div>
       ) : (
         <ul className="collection-page__grid">

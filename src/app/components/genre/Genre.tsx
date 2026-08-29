@@ -31,21 +31,21 @@ export default function Genre() {
       value={currentGenre}
       onChange={handleChange}
     >
-      <option value="">All Genres</option>
-      <option value="action">Action</option>
-      <option value="arcade">Arcade</option>
-      <option value="fighting">Fighting</option>
-      <option value="platformer">Platformer</option>
-      <option value="point-and-click">Point and Click</option>
-      <option value="puzzle">Puzzle</option>
-      <option value="racing">Racing</option>
-      <option value="role-playing">Role Playing</option>
-      <option value="shooter">Shooter</option>
-      <option value="simulation">Simulation</option>
+      <option value="">Svi žanrovi</option>
+      <option value="action">Akcija</option>
+      <option value="arcade">Arkade</option>
+      <option value="fighting">Borilačke</option>
+      <option value="platformer">Platformeri</option>
+      <option value="point-and-click">Pokaži i klikni</option>
+      <option value="puzzle">Logičke / Zagonetke</option>
+      <option value="racing">Utrke</option>
+      <option value="role-playing">Igre uloga (RPG)</option>
+      <option value="shooter">Pucačine</option>
+      <option value="simulation">Simulacije</option>
       <option value="sport">Sport</option>
-      <option value="strategy">Strategy</option>
-      <option value="survival">Survival</option>
-      <option value="visual-novel">Visual Novel</option>
+      <option value="strategy">Strategije</option>
+      <option value="survival">Preživljavanje</option>
+      <option value="visual-novel">Vizualni romani</option>
     </select>
   );
 }

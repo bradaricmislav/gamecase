@@ -39,7 +39,7 @@ function SidebarNav({ stats }: { stats: Stats }) {
   return (
     <>
       <div className="sidebar__stats">
-        <h2>AVG SCORE</h2>
+        <h2>PROSJEČNA OCJENA</h2>
         <div className="sidebar__stats-body">
           <span
             style={{ backgroundColor: getRatingColor(stats.avgRating) }}
@@ -49,9 +49,9 @@ function SidebarNav({ stats }: { stats: Stats }) {
           </span>
           <div className="sidebar__stats-info">
             <span className="sidebar__rated">
-              {stats.ratedGamesCount} rated
+              {stats.ratedGamesCount} ocjenjeno
             </span>
-            <span className="sidebar__total">{stats.totalCount} total</span>
+            <span className="sidebar__total">{stats.totalCount} ukupno</span>
           </div>
         </div>
       </div>
@@ -64,9 +64,12 @@ function SidebarNav({ stats }: { stats: Stats }) {
               className={`nav-item ${pathname === "/dashboard" ? "active" : ""}`}
             >
               <span>
-                <img src="/icons/dashboard_icon.svg" alt="Dashboard Icon" />
+                <img
+                  src="/icons/dashboard_icon.svg"
+                  alt="Ikona nadzorne ploče"
+                />
               </span>
-              Dashboard
+              Nadzorna ploča
             </Link>
           </li>
 
@@ -76,9 +79,9 @@ function SidebarNav({ stats }: { stats: Stats }) {
               className={`nav-item ${isMyCollectionPage ? "active" : ""}`}
             >
               <span>
-                <img src="/icons/collection_icon.svg" alt="Collection Icon" />
+                <img src="/icons/collection_icon.svg" alt="Ikona kolekcije" />
               </span>
-              My Collection
+              Moja kolekcija
             </Link>
           </li>
 
@@ -88,16 +91,16 @@ function SidebarNav({ stats }: { stats: Stats }) {
               className={`nav-item ${pathname === "/browse" ? "active" : ""}`}
             >
               <span>
-                <img src="/icons/search_icon.svg" alt="Search Icon" />
+                <img src="/icons/search_icon.svg" alt="Ikona pretraživanja" />
               </span>
-              Browse Games
+              Pretraži igre
             </Link>
           </li>
         </ul>
       </nav>
 
       <div className="status-group">
-        <p className="status-title">BY STATUS</p>
+        <p className="status-title">PO STATUSU</p>
         <ul className="status-list">
           <li className="status-item">
             <Link
@@ -105,7 +108,7 @@ function SidebarNav({ stats }: { stats: Stats }) {
               className={`status-link ${isStatusActive(null) ? "active" : ""}`}
             >
               <span className="status-label">
-                <span className="status-dot"></span> All Games
+                <span className="status-dot"></span> Sve igre
               </span>
               <span className="status-count">{stats.totalCount}</span>
             </Link>
@@ -117,7 +120,7 @@ function SidebarNav({ stats }: { stats: Stats }) {
               className={`status-link ${isStatusActive("playing") ? "active" : ""}`}
             >
               <span className="status-label">
-                <span className="status-dot playing"></span> Playing
+                <span className="status-dot playing"></span> Trenutno igram
               </span>
               <span className="status-count">{stats.playingCount}</span>
             </Link>
@@ -129,7 +132,7 @@ function SidebarNav({ stats }: { stats: Stats }) {
               className={`status-link ${isStatusActive("completed") ? "active" : ""}`}
             >
               <span className="status-label">
-                <span className="status-dot completed"></span> Completed
+                <span className="status-dot completed"></span> Završeno
               </span>
               <span className="status-count">{stats.completedCount}</span>
             </Link>
@@ -141,7 +144,7 @@ function SidebarNav({ stats }: { stats: Stats }) {
               className={`status-link ${isStatusActive("wishlist") ? "active" : ""}`}
             >
               <span className="status-label">
-                <span className="status-dot wishlist"></span> Wishlist
+                <span className="status-dot wishlist"></span> Lista želja
               </span>
               <span className="status-count">{stats.wishlistCount}</span>
             </Link>
@@ -153,7 +156,7 @@ function SidebarNav({ stats }: { stats: Stats }) {
               className={`status-link ${isStatusActive("dropped") ? "active" : ""}`}
             >
               <span className="status-label">
-                <span className="status-dot dropped"></span> Dropped
+                <span className="status-dot dropped"></span> Napušteno
               </span>
               <span className="status-count">{stats.droppedCount}</span>
             </Link>
@@ -162,7 +165,7 @@ function SidebarNav({ stats }: { stats: Stats }) {
       </div>
 
       <div className="status-group">
-        <p className="status-title">SPECIAL LISTS</p>
+        <p className="status-title">POSEBNE LISTE</p>
         <ul className="status-list">
           <li className="status-item">
             <Link
@@ -170,8 +173,8 @@ function SidebarNav({ stats }: { stats: Stats }) {
               className={`status-link ${isListActive("favorites") ? "active" : ""}`}
             >
               <span className="status-label">
-                <img src="/icons/star_icon.svg" alt="Star Icon" />
-                Favorites
+                <img src="/icons/star_icon.svg" alt="Ikona zvjezdice" />
+                Omiljeno
               </span>
               {stats.favoritesCount !== undefined && (
                 <span className="status-count">{stats.favoritesCount}</span>
@@ -187,9 +190,9 @@ function SidebarNav({ stats }: { stats: Stats }) {
               <span className="status-label">
                 <img
                   src="/icons/heart-broken_icon.svg"
-                  alt="Heart Broken Icon"
+                  alt="Ikona slomljenog srca"
                 />{" "}
-                Disappointments
+                Razočaranja
               </span>
               {stats.disappointmentsCount !== undefined && (
                 <span className="status-count">
